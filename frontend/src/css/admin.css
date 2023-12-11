@@ -1,0 +1,13 @@
+.container-admin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  margin: 3rem;
+}
+
+.validation {
+  margin-top: 15rem;
+}
