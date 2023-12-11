@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Inscription from "./pages/Inscription";
 import UserProfil from "./pages/UserProfil";
 import App from "./App";
+import Map from "./pages/Map";
 import Admin from "./pages/Admin";
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/inscription",
     element: <Inscription />,
+  },
+  {
+    path: "/map",
+    element: <Map />,
   },
   {
     path: "/user-profil",
