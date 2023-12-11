@@ -19,11 +19,11 @@ const router = createBrowserRouter([
   {
     path: "/inscription",
     element: <Inscription />,
-    },
+  },
   {
     path: "/user-profil",
     element: <UserProfil />,
-    },
+  },
   {
     path: "/admin",
     element: <Admin />,
