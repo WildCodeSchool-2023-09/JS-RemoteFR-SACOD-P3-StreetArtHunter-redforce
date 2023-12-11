@@ -2,14 +2,18 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import UserProfil from "./pages/UserProfil";
-
 import App from "./App";
+import Map from "./pages/Map";
 import Admin from "./pages/Admin";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/map",
+    element: <Map />,
   },
   {
     path: "/user-profil",
