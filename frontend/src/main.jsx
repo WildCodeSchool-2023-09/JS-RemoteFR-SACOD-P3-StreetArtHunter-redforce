@@ -1,10 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import Home from "./pages/Home";
 import Inscription from "./pages/Inscription";
-
+import UserProfil from "./pages/UserProfil";
 import App from "./App";
+import Admin from "./pages/Admin";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
   {
     path: "/inscription",
     element: <Inscription />,
+    },
+  {
+    path: "/user-profil",
+    element: <UserProfil />,
+    },
+  {
+    path: "/admin",
+    element: <Admin />,
   },
 ]);
 
