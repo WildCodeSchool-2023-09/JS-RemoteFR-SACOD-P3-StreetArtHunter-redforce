@@ -1,7 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import UserProfil from "./pages/UserProfil";
 
 import App from "./App";
 
@@ -9,6 +9,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/user-profil",
+    element: <UserProfil />,
   },
 ]);
 

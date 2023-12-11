@@ -1,0 +1,14 @@
+.profile-contenair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-pic {
+  margin: 2rem;
+  width: 10rem;
+}
+
+button {
+  margin: 1rem;
+}
