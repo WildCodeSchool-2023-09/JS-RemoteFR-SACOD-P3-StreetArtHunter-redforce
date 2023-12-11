@@ -6,7 +6,7 @@ export default function Home() {
       <img className="user-pic" alt="user" src="https://picsum.photos/200" />
       <div className="money-count">
         Player Coin
-        <img alt="coin" src="coin.png" />
+        <img className="coin" alt="coin" src="../../public/coin.png" />
       </div>
       <button type="button" className="galery-player">
         My galery

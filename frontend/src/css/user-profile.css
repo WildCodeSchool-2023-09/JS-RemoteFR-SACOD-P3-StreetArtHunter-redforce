@@ -12,3 +12,15 @@
 button {
   margin: 1rem;
 }
+
+.coin {
+  width: 2rem;
+}
+
+.money-count {
+  margin-top: 2rem;
+}
+
+.galery-player {
+  margin-top: 15rem;
+}
