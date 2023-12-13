@@ -1,12 +1,19 @@
 import React, { useState, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "../components/Map.scss";
+import "../assets/scss/Map.scss";
+import Geolocation from "../components/Geolocation";
 
 function Map() {
-  const [center] = useState({ lat: 51.505, lng: -0.09 });
   const ZOOM_LEVEL = 13;
   const mapRef = useRef(null);
+
+  const location = Geolocation();
+  const [center] = useState([
+    location.coordinates.lat,
+    location.coordinates.lng,
+  ]);
+  console.info(location);
 
   return (
     <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef}>
@@ -14,11 +21,13 @@ function Map() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href=https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Marker position={center}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
+      {location.loaded && !location.error && (
+        <Marker position={[location.coordinates.lat, location.coordinates.lng]}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      )}
     </MapContainer>
   );
 }
