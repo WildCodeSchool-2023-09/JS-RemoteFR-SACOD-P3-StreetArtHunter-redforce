@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 function Geolocation() {
   const [location, setLocation] = useState({
     loaded: false,
-    coordinates: { lat: "50.284", lng: "3.924" },
+    coordinates: { lat: "", lng: "" },
   });
 
   const onSuccess = (location) => {
@@ -23,6 +23,7 @@ function Geolocation() {
       error,
     });
   };
+
   useEffect(() => {
     if (!("geolocation" in navigator)) {
       onError({
