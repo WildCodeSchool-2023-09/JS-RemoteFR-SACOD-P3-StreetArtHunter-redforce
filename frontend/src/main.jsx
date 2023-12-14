@@ -1,6 +1,8 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from "react-dom/client";
+import Home from "./pages/Home";
+import Inscription from "./pages/Inscription";
 import UserProfil from "./pages/UserProfil";
 import App from "./App";
 import Map from "./pages/Map";
@@ -12,7 +14,15 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/Map",
+    path: "/home",
+    element: <Home />,
+  },
+  {
+    path: "/inscription",
+    element: <Inscription />,
+  },
+  {
+    path: "/map",
     element: <Map />,
   },
   {
