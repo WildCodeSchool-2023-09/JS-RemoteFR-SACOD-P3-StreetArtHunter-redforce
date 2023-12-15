@@ -8,6 +8,7 @@ import App from "./App";
 import Map from "./pages/Map";
 import Admin from "./pages/Admin";
 import Gallery from "./pages/Gallery";
+import Camera from "./pages/Camera";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
     path: "/galerie",
     element: <Gallery />,
   },
+  {
+    path: "/camera",
+    element: <Camera />,
+  },
+
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
