@@ -1,6 +1,5 @@
-import React from "react";
-import Webcam from "react-webcam";
-import { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback } from 'react';
+import Webcam from 'react-webcam';
 
 function Camera() {
   const webcamRef = useRef(null);
