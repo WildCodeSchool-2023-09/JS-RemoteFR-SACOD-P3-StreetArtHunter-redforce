@@ -22,7 +22,9 @@ function Camera() {
           Retour
         </button>
         {imgSrc === null ? (
-          <button type="button" onClick={capture}>Take your picture!</button>
+          <button type="button" onClick={capture}>
+            Take your picture!
+          </button>
         ) : (
           <button type="button" className="button-post">
             Post-it!
