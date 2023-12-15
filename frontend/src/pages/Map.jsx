@@ -18,18 +18,23 @@ function Map() {
     lat: 0,
     lng: 0,
   };
-  const ZOOM_LEVEL = 2;
+  const ZOOM_LEVEL = 13;
   const mapRef = useRef(null);
 
+  if (location.loaded && !location.error) {
+    mapRef.current.setView([
+      location.coordinates.lat,
+      location.coordinates.lng,
+    ]);
+  } else {
+    console.error("error");
+  }
+
   const showMyLocation = () => {
-    if (location.loaded && !location.error) {
-      mapRef.current.setView(
-        [location.coordinates.lat, location.coordinates.lng],
-        ZOOM_LEVEL + 13
-      );
-    } else {
-      alert(location.error.message);
-    }
+    mapRef.current.setView([
+      location.coordinates.lat,
+      location.coordinates.lng,
+    ]);
   };
 
   return (
