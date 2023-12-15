@@ -11,38 +11,38 @@ import Gallery from "./pages/Gallery";
 import Camera from "./pages/Camera";
 
 const router = createBrowserRouter([
-    {
+  {
     path: "/",
     element: <App />,
-    },
-    {
+  },
+  {
     path: "/home",
     element: <Home />,
-    },
-    {
+  },
+  {
     path: "/inscription",
     element: <Inscription />,
-    },
-    {
+  },
+  {
     path: "/map",
     element: <Map />,
-    },
-    {
+  },
+  {
     path: "/user-profil",
     element: <UserProfil />,
-    },
-    {
+  },
+  {
     path: "/admin",
     element: <Admin />,
-    },
-    {
+  },
+  {
     path: "/galerie",
     element: <Gallery />,
-    },
-    {
+  },
+  {
     path: "/camera",
     element: <Camera />,
-    },
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
