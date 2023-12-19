@@ -23,22 +23,24 @@ function Map() {
   const location = Geolocation();
 
   return (
-    <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href=https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      {location.loaded && !location.error && (
-        <Marker
-          Icon={markerIcon}
-          position={[location.coordinates.lat, location.coordinates.lng]}
-        >
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      )}
-    </MapContainer>
+    <div>
+      <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef}>
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href=https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        {location.loaded && !location.error && (
+          <Marker
+            Icon={markerIcon}
+            position={[location.coordinates.lat, location.coordinates.lng]}
+          >
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker>
+        )}
+      </MapContainer>
+    </div>
   );
 }
 
