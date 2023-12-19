@@ -50,7 +50,13 @@ function Map() {
             position={[location.coordinates.lat, location.coordinates.lng]}
           >
             <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
+              <img
+                src="../src/assets/images/cat-art.jpg"
+                height="200px"
+                width="200px"
+                alt="cat-art"
+              />
+              <br /> Amazing cat.
             </Popup>
           </Marker>
         )}
