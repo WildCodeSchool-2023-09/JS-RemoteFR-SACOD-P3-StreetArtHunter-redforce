@@ -7,6 +7,8 @@ import UserProfil from "./pages/UserProfil";
 import App from "./App";
 import Map from "./pages/Map";
 import Admin from "./pages/Admin";
+import Gallery from "./pages/Gallery";
+import Camera from "./pages/Camera";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <Admin />,
+  },
+  {
+    path: "/galerie",
+    element: <Gallery />,
+  },
+  {
+    path: "/camera",
+    element: <Camera />,
   },
 ]);
 
