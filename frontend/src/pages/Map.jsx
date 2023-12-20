@@ -46,7 +46,7 @@ function Map() {
         />
         {location.loaded && !location.error && (
           <Marker
-            icon={markerIcon} // Corrected prop here
+            Icon={markerIcon}
             position={[location.coordinates.lat, location.coordinates.lng]}
           >
             <Popup>
@@ -58,7 +58,6 @@ function Map() {
               />
               <br /> Amazing cat.
             </Popup>
-            <Popup>Amazing cat. {/* Updated content */}</Popup>
           </Marker>
         )}
       </MapContainer>

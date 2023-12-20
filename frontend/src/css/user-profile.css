@@ -31,16 +31,6 @@
   text-align: center;
 }
 
-button {
-  border-radius: 12px;
-  font-family: "RetroGaming", sans-serif;
-  padding: 1rem;
-  width: 8rem;
-  height: 4rem;
-  background-color: white;
-  color: rgb(0, 0, 0);
-}
-
 .coin {
   width: 2rem;
   margin-right: 1rem;

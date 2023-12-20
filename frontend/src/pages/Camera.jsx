@@ -1,4 +1,5 @@
 import React, { useRef, useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 import Webcam from "react-webcam";
 import "../css/camera.css";
 
@@ -38,21 +39,25 @@ function Camera() {
         )}
       </div>
       <div className="btn-container">
-        <button
+        <Link
           type="button"
           className="button-back"
+          to="/camera"
           onClick={() => setImgSrc(null)}
         >
-          Retour
-        </button>
+          <img alt="button" src="../../public/boutonAB.png" />
+          <div className="button-text">Back</div>
+        </Link>
         {!imgSrc && (
           <button type="button" className="button-take" onClick={capture}>
-            Take your picture!
+            <img alt="button" src="../../public/boutonAB.png" />
+            <div className="button-text">Snap !</div>
           </button>
         )}
         {imgSrc && (
           <button type="button" className="button-post">
-            Post-it!
+            <img alt="button" src="../../public/boutonAB.png" />
+            <div className="button-text">Post-it</div>
           </button>
         )}
       </div>
