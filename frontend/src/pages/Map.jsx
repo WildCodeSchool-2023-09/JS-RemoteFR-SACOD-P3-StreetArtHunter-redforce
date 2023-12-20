@@ -48,21 +48,18 @@ function Map() {
   ];
 
   return (
-    <>
     <div>
       <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href=https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {location.loaded && !location.error && (
           <Marker
-            Icon={markerIcon}
+            icon={markerIcon} // Corrected prop here
             position={[location.coordinates.lat, location.coordinates.lng]}
           >
-            <Popup>
-              <br /> Amazing cat.
-            </Popup>
+            <Popup>Amazing cat. {/* Updated content */}</Popup>
           </Marker>
         )}
         <ImageOverlay
@@ -80,12 +77,6 @@ function Map() {
           Appareil photo
         </button>
       </div>
-    </>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
-        )}
-      </MapContainer>
     </div>
   );
 }
