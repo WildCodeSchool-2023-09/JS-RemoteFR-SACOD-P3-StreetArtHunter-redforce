@@ -1,5 +1,11 @@
 import React, { useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  ImageOverlay,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "../assets/scss/Map.scss";
@@ -36,6 +42,10 @@ function Map() {
       location.coordinates.lng,
     ]);
   };
+  const bounds = [
+    [location.coordinates.lat + 0.005, location.coordinates.lng - 0.01],
+    [location.coordinates.lat + 0.015, location.coordinates.lng + 0.01],
+  ];
 
   return (
     <>
@@ -50,16 +60,16 @@ function Map() {
             position={[location.coordinates.lat, location.coordinates.lng]}
           >
             <Popup>
-              <img
-                src="../src/assets/images/cat-art.jpg"
-                height="200px"
-                width="200px"
-                alt="cat-art"
-              />
               <br /> Amazing cat.
             </Popup>
           </Marker>
         )}
+        <ImageOverlay
+          url="../src/assets/images/cat-art.jpg"
+          bounds={bounds}
+          opacity={1}
+          zIndex={10}
+        />
       </MapContainer>
       <div className="button_l-p">
         <button type="button" className="location" onClick={showMyLocation}>
