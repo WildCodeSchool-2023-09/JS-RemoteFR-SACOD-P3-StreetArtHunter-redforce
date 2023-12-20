@@ -1,5 +1,11 @@
-import React, { useState, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import React, { useRef } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  ImageOverlay,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "../assets/scss/Map.scss";
@@ -13,16 +19,36 @@ const markerIcon = new L.Icon({
 });
 
 function Map() {
-  const [center] = useState({
-    lat: 50.284,
-    lng: 3.924,
-  });
+  const location = Geolocation();
+  const center = {
+    lat: 0,
+    lng: 0,
+  };
   const ZOOM_LEVEL = 13;
   const mapRef = useRef(null);
 
-  const location = Geolocation();
+  if (location.loaded && !location.error) {
+    mapRef.current.setView([
+      location.coordinates.lat,
+      location.coordinates.lng,
+    ]);
+  } else {
+    console.error("error");
+  }
+
+  const showMyLocation = () => {
+    mapRef.current.setView([
+      location.coordinates.lat,
+      location.coordinates.lng,
+    ]);
+  };
+  const bounds = [
+    [location.coordinates.lat + 0.005, location.coordinates.lng - 0.01],
+    [location.coordinates.lat + 0.015, location.coordinates.lng + 0.01],
+  ];
 
   return (
+    <>
     <div>
       <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef}>
         <TileLayer
@@ -35,6 +61,26 @@ function Map() {
             position={[location.coordinates.lat, location.coordinates.lng]}
           >
             <Popup>
+              <br /> Amazing cat.
+            </Popup>
+          </Marker>
+        )}
+        <ImageOverlay
+          url="../src/assets/images/cat-art.jpg"
+          bounds={bounds}
+          opacity={1}
+          zIndex={10}
+        />
+      </MapContainer>
+      <div className="button_l-p">
+        <button type="button" className="location" onClick={showMyLocation}>
+          Voir ma localisation
+        </button>
+        <button type="button" className="picture">
+          Appareil photo
+        </button>
+      </div>
+    </>
               A pretty CSS3 popup. <br /> Easily customizable.
             </Popup>
           </Marker>

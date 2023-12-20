@@ -1,6 +1,12 @@
 /* eslint-disable no-shadow */
 import { useState, useEffect } from "react";
 
+let id = 0;
+const target = {
+  latitude: 0,
+  longitude: 0,
+};
+
 function Geolocation() {
   const [location, setLocation] = useState({
     loaded: false,
@@ -8,6 +14,14 @@ function Geolocation() {
   });
 
   const onSuccess = (location) => {
+    const crd = location.coords;
+    if (
+      target.latitude === crd.latitude &&
+      target.longitude === crd.longitude
+    ) {
+      console.info("Congratulation, you reach the target");
+      navigator.geolocation.clearWatch(id);
+    }
     setLocation({
       loaded: true,
       coordinates: {
@@ -30,8 +44,14 @@ function Geolocation() {
         code: 0,
         message: "Geolocation not supported",
       });
+    } else {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+      id = navigator.geolocation.watchPosition(onSuccess, onError, options);
     }
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
   }, []);
   return location;
 }
