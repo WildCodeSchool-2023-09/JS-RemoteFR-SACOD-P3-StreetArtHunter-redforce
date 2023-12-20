@@ -49,7 +49,6 @@ function Map() {
 
   return (
     <>
-    <div>
       <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -81,12 +80,6 @@ function Map() {
         </button>
       </div>
     </>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
-        )}
-      </MapContainer>
-    </div>
   );
 }
 
