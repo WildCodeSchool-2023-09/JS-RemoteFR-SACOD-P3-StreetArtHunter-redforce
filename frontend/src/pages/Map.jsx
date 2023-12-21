@@ -1,16 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "../assets/scss/Map.scss";
 import Geolocation from "../components/Geolocation";
-
-const markerIcon = new L.Icon({
-  iconUrl: "",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-});
 
 function Map() {
   const location = Geolocation();
@@ -20,6 +13,9 @@ function Map() {
   };
   const ZOOM_LEVEL = 13;
   const mapRef = useRef(null);
+  const [isMarkerClicked1, setMarkerClicked1] = useState(false);
+  const [isMarkerClicked2, setMarkerClicked2] = useState(false);
+  const [isMarkerClicked3, setMarkerClicked3] = useState(false);
 
   if (location.loaded && !location.error) {
     mapRef.current.setView([
@@ -36,6 +32,33 @@ function Map() {
       location.coordinates.lng,
     ]);
   };
+  const handleMarkerClick1 = () => {
+    setMarkerClicked1((prevClicked) => !prevClicked);
+  };
+  const handleMarkerClick2 = () => {
+    setMarkerClicked2((prevClicked) => !prevClicked);
+  };
+  const handleMarkerClick3 = () => {
+    setMarkerClicked3((prevClicked) => !prevClicked);
+  };
+  const markerIcon1 = new L.Icon({
+    iconUrl: "../../public/cat-art.png",
+    iconSize: isMarkerClicked1 ? [300, 300] : [32, 32], // Ajustez la taille de l'icône au clic
+    iconAnchor: [isMarkerClicked1 ? 24 : 16, isMarkerClicked1 ? 48 : 32], // Point d'ancrage de l'icône
+    popupAnchor: [0, isMarkerClicked1 ? -48 : -32],
+  });
+  const markerIcon2 = new L.Icon({
+    iconUrl: "../../public/lisa.png",
+    iconSize: isMarkerClicked2 ? [300, 300] : [32, 32], // Ajustez la taille de l'icône au clic
+    iconAnchor: [isMarkerClicked2 ? 24 : 16, isMarkerClicked2 ? 48 : 32], // Point d'ancrage de l'icône
+    popupAnchor: [0, isMarkerClicked2 ? -48 : -32],
+  });
+  const markerIcon3 = new L.Icon({
+    iconUrl: "../../public/artspert.png",
+    iconSize: isMarkerClicked3 ? [300, 300] : [32, 32], // Ajustez la taille de l'icône au clic
+    iconAnchor: [isMarkerClicked3 ? 24 : 16, isMarkerClicked3 ? 48 : 32], // Point d'ancrage de l'icône
+    popupAnchor: [0, isMarkerClicked3 ? -48 : -32],
+  });
 
   return (
     <div>
@@ -50,16 +73,40 @@ function Map() {
             position={[location.coordinates.lat, location.coordinates.lng]}
           >
             <Popup>
-              <img
-                src="../src/assets/images/cat-art.jpg"
-                height="200px"
-                width="200px"
-                alt="cat-art"
-              />
-              <br /> Amazing cat.
+              <p>ma localisation</p>
             </Popup>
           </Marker>
         )}
+        <Marker
+          icon={markerIcon1} // Corrected prop here
+          position={[50.28948, 3.869085]}
+          eventHandlers={{ click: () => handleMarkerClick1() }}
+        >
+          <Popup>
+            <p>amazing cat</p>
+            <p>bastille</p>
+          </Popup>
+        </Marker>
+        <Marker
+          icon={markerIcon2} // Corrected prop here
+          position={[50.29425, 3.890972]}
+          eventHandlers={{ click: () => handleMarkerClick2() }}
+        >
+          <Popup>
+            <p>lisa</p>
+            <p>nation</p>
+          </Popup>
+        </Marker>
+        <Marker
+          icon={markerIcon3} // Corrected prop here
+          position={[50.309789, 3.864533]}
+          eventHandlers={{ click: () => handleMarkerClick3() }}
+        >
+          <Popup>
+            <p>artspetrt</p>
+            <p>republique</p>
+          </Popup>
+        </Marker>
       </MapContainer>
       <div className="button_l-p">
         <button type="button" className="location" onClick={showMyLocation}>
