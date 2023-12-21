@@ -51,13 +51,14 @@ export default function Home() {
         <img className="coin" alt="coin" src="../../public/pixel-coin.png" />
       </div>
       <div className="button-container">
-        <button
+        <Link
+          to="/galerie"
           type="button"
           className="galery-player"
           onClick={() => setShowUserArt(!showUserArt)}
         >
           <div className="button-text">My galery</div>
-        </button>
+        </Link>
         {showUserArt && <List items={userArtWork} />}
         <button
           type="button"

@@ -1,0 +1,23 @@
+.logo {
+  width: 200px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40%;
+  margin-left: 25%;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 20%;
+}
+
+.inscription-title {
+  font-size: 20px;
+  margin-bottom: 15%;
+  margin-left: 2%;
+  font-family: "RetroGaming";
+}
