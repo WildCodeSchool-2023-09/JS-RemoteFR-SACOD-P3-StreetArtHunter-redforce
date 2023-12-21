@@ -6,6 +6,7 @@ function Home() {
     <div>
       <div className="form">
         <form action="" method="post">
+          <img src="../public/cat-art.jpg" alt="logo" className="logo" />
           <h1>Hunt for street art near you!</h1>
           <h2>START GAME</h2>
           <div>
@@ -21,6 +22,7 @@ function Home() {
             <input type="password" id="password" required />
           </div>
           <button type="button">Connexion</button>
+          <button type="button">Mode visiteur</button>
         </form>
       </div>
     </div>

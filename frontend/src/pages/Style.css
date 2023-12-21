@@ -1,9 +1,25 @@
+@font-face {
+  font-family: "RetroGaming";
+  src: url("./public/RetroGaming.ttf") format("truetype");
+}
+
+.logo {
+  width: 200px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
 .form {
   margin: 0 auto;
   justify-content: center;
   display: flex;
-  width: 500px;
+  width: 100%;
+  max-width: 600px;
   margin-top: 100px;
+  font-family: "RetroGaming";
+  padding: 0 20px 20px 20px;
+  box-sizing: border-box;
 }
 
 input {
@@ -16,4 +32,10 @@ input {
 button {
   margin-top: 10px;
   border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .form {
+    width: 60%;
+  }
 }
