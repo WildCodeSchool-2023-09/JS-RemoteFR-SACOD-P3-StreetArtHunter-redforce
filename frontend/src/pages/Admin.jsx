@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../css/admin.css";
 
@@ -76,6 +77,9 @@ export default function Admin() {
       <button type="button" className="signout-button">
         <div className="button-text">Sign out</div>
       </button>
+      <Link type="button" className="button-back-admin" to="/map">
+        <div className="button-text">Back</div>
+      </Link>
     </div>
   );
 }

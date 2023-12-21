@@ -42,7 +42,7 @@ function Camera() {
         <Link
           type="button"
           className="button-back"
-          to="/camera"
+          to="/map"
           onClick={() => setImgSrc(null)}
         >
           <img alt="button" src="../../public/boutonAB.png" />

@@ -28,7 +28,8 @@
 .validation,
 .profil-list-button,
 .artwork-list-button,
-.signout-button {
+.signout-button,
+.button-back-admin {
   position: relative;
   display: flex;
   align-items: center;
@@ -51,7 +52,8 @@
 .validation:active,
 .profil-list-button:active,
 .artwork-list-button:active,
-.signout-button:active {
+.signout-button:active,
+.button-back-admin:active {
   transform: translateY(5px);
 }
 
