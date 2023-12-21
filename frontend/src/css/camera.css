@@ -7,11 +7,14 @@
   src: url("./public/RetroGaming.ttf") format("truetype");
 }
 
-body {
+.main-container {
   background-image: url("/brick.png");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding-top: 10%;
 }
 
 .camera-container {
@@ -20,7 +23,6 @@ body {
   height: 80vh;
   overflow: hidden;
   margin: auto;
-  margin-top: 10%;
 }
 
 .camera-container img,
@@ -56,6 +58,14 @@ body {
   border-style: none;
   margin-bottom: 4vw;
   margin-left: 3vw;
+  cursor: pointer;
+  outline: none;
+}
+
+.button-back:active,
+.button-post:active,
+.button-take:active {
+  transform: translateY(5px);
 }
 
 .button-back:last-child,
@@ -79,5 +89,6 @@ body {
   transform: translate(-50%, -50%);
   color: white;
   z-index: 1;
-  font-size: 4vw;
+  font-size: 5vw;
+  font-family: "RetroGaming";
 }

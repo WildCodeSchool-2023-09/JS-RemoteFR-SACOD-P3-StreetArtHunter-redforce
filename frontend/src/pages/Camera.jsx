@@ -20,7 +20,7 @@ function Camera() {
   }, [webcamRef]);
 
   return (
-    <div>
+    <div className="main-container">
       <div className="camera-container">
         {imgSrc ? (
           <img
@@ -51,13 +51,13 @@ function Camera() {
         {!imgSrc && (
           <button type="button" className="button-take" onClick={capture}>
             <img alt="button" src="../../public/boutonAB.png" />
-            <div className="button-text">Snap !</div>
+            <div className="button-text">Snap</div>
           </button>
         )}
         {imgSrc && (
           <button type="button" className="button-post">
             <img alt="button" src="../../public/boutonAB.png" />
-            <div className="button-text">Post-it</div>
+            <div className="button-text">Post</div>
           </button>
         )}
       </div>
