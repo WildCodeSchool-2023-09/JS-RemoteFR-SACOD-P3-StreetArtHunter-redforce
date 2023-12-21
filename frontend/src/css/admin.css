@@ -16,3 +16,48 @@
 .validation {
   margin-top: 15rem;
 }
+
+.btn-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.validation,
+.profil-list-button,
+.artwork-list-button,
+.signout-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 280px;
+  min-height: 72px;
+  border: 1px solid #000000;
+  background-color: black;
+  border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  margin-bottom: 12vw;
+  margin-left: 3vw;
+  cursor: pointer;
+  outline: none;
+  -webkit-box-shadow: -10px 14px 11px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: -10px 14px 11px 0px rgba(0, 0, 0, 0.6);
+}
+
+.validation:active,
+.profil-list-button:active,
+.artwork-list-button:active,
+.signout-button:active {
+  transform: translateY(5px);
+}
+
+.button-back:last-child,
+.button-post:last-child,
+.button-take:last-child {
+  margin-left: 15%;
+  margin-right: 3%;
+}
