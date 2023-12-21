@@ -69,7 +69,6 @@ function Map() {
         />
         {location.loaded && !location.error && (
           <Marker
-            Icon={markerIcon}
             position={[location.coordinates.lat, location.coordinates.lng]}
           >
             <Popup>
