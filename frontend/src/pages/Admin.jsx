@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../css/admin.css";
 
@@ -51,29 +52,34 @@ export default function Admin() {
         type="button"
         onClick={() => setShowValidationPhotos(!showValidationPhotos)}
       >
-        Photos awaiting validation
+        <div className="button-text">Photos awaiting validation</div>
       </button>
       {showValidationPhotos && <List items={validationPhotos} />}
 
       <button
+        className="profil-list-button"
         type="button"
         onClick={() => setShowUserProfileList(!showUserProfileList)}
       >
-        User profile list
+        <div className="button-text">User profile list</div>
       </button>
       {showUserProfileList && <List items={userProfiles} />}
 
       <button
+        className="artwork-list-button"
         type="button"
         onClick={() => setShowStreetArtList(!showStreetArtList)}
       >
-        list of street art works
+        <div className="button-text">list of street art works</div>
       </button>
       {showStreetArtList && <List items={streetArtWorks} />}
 
       <button type="button" className="signout-button">
-        Sign out
+        <div className="button-text">Sign out</div>
       </button>
+      <Link type="button" className="button-back-admin" to="/map">
+        <div className="button-text">Back</div>
+      </Link>
     </div>
   );
 }

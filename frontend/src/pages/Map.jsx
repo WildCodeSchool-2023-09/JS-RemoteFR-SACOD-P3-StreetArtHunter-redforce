@@ -68,7 +68,7 @@ function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {location.loaded && !location.error && (
-          <Marker // Corrected prop here
+          <Marker
             position={[location.coordinates.lat, location.coordinates.lng]}
           >
             <Popup>

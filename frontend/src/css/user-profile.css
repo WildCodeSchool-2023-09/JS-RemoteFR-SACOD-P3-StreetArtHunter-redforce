@@ -11,6 +11,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
 }
 
 .pic-coincontainer {
@@ -31,16 +33,6 @@
   text-align: center;
 }
 
-button {
-  border-radius: 12px;
-  font-family: "RetroGaming", sans-serif;
-  padding: 1rem;
-  width: 8rem;
-  height: 4rem;
-  background-color: white;
-  color: rgb(0, 0, 0);
-}
-
 .coin {
   width: 2rem;
   margin-right: 1rem;
@@ -50,6 +42,58 @@ button {
   display: flex;
   text-align: center;
   margin-right: 1rem;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.galery-player,
+.player-rank-button,
+.edit-profil-button,
+.signout-button,
+.deleteprofile-button,
+.back-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 250px;
+  min-height: 52px;
+  border: 1px solid #000000;
+  background-color: black;
+  border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  margin-bottom: 12vw;
+  margin-left: 3vw;
+  cursor: pointer;
+  outline: none;
+  -webkit-box-shadow: -10px 14px 11px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: -10px 14px 11px 0px rgba(0, 0, 0, 0.6);
+}
+
+.galery-player:active,
+.player-rank-button:active,
+.edit-profil-button:active,
+.signout-button:active,
+.deleteprofile-button:active .back-button:active {
+  transform: translateY(5px);
+}
+
+.button-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  z-index: 1;
+  font-size: 5vw;
+  font-family: "RetroGaming";
 }
 
 .galery-player {

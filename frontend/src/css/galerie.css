@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+}
+
+@font-face {
+  font-family: "RetroGaming";
+  src: url("./public/RetroGaming.ttf") format("truetype");
+}
+
+.galery-contenair {
+  display: flex;
+  flex-direction: column;
+}
+
+.galery-img {
+  margin: 5%;
+  margin-bottom: 110%;
+}
+
+.back-button:active {
+  transform: translateY(5px);
+}

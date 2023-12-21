@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import "../css/user-profile.css";
 
 function List({ items }) {
@@ -49,31 +50,36 @@ export default function Home() {
         <div className="money-count">1000</div>
         <img className="coin" alt="coin" src="../../public/pixel-coin.png" />
       </div>
-      <button
-        type="button"
-        className="galery-player"
-        onClick={() => setShowUserArt(!showUserArt)}
-      >
-        My galery
-      </button>
-      {showUserArt && <List items={userArtWork} />}
-      <button
-        type="button"
-        className="player-rank-button"
-        onClick={() => setShowPlayerRank(!showPlayerRank)}
-      >
-        Player Ranking
-      </button>
-      {showPlayerRank && <List items={playerRankList} />}
-      <button type="button" className="edit-profil-button">
-        Edit profile
-      </button>
-      <button type="button" className="signout-button">
-        Sign out
-      </button>
-      <button type="button" className="deleteprofile-button">
-        Delete profile
-      </button>
+      <div className="button-container">
+        <button
+          type="button"
+          className="galery-player"
+          onClick={() => setShowUserArt(!showUserArt)}
+        >
+          <div className="button-text">My galery</div>
+        </button>
+        {showUserArt && <List items={userArtWork} />}
+        <button
+          type="button"
+          className="player-rank-button"
+          onClick={() => setShowPlayerRank(!showPlayerRank)}
+        >
+          <div className="button-text">Player Ranking</div>
+        </button>
+        {showPlayerRank && <List items={playerRankList} />}
+        <button type="button" className="edit-profil-button">
+          <div className="button-text">Edit profile</div>
+        </button>
+        <button type="button" className="signout-button">
+          <div className="button-text">Sign out</div>
+        </button>
+        <button type="button" className="deleteprofile-button">
+          <div className="button-text">Delete profile</div>
+        </button>
+        <Link to="/map" type="button" className="back-button">
+          <div className="button-text">Back</div>
+        </Link>
+      </div>
     </div>
   );
 }
