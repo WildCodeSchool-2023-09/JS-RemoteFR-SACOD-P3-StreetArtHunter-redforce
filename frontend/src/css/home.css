@@ -1,0 +1,56 @@
+.logo {
+  width: 200px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40%;
+  margin-left: 25%;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 20%;
+}
+
+.inscription-title,
+.start-text {
+  font-size: 20px;
+  margin-bottom: 15%;
+  margin-left: 2%;
+  font-family: "RetroGaming";
+}
+
+.start-text {
+  padding-left: 30%;
+}
+
+input {
+  display: block;
+  height: 25px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .form {
+    width: 60%;
+  }
+}
+
+.home-button-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.connexion-button {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  max-width: 150px;
+}
+
+.connexion-visiteur {
+  max-width: 150px;
+}

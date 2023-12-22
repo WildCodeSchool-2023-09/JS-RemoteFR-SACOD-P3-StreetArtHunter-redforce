@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+}
+
+@font-face {
+  font-family: "RetroGaming";
+  src: url("./public/RetroGaming.ttf") format("truetype");
+}
+
+.main-container {
+  background-image: url("/brick.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding-top: 10%;
+}
+
+.camera-container {
+  position: relative;
+  width: 80%;
+  height: 80vh;
+  overflow: hidden;
+  margin: auto;
+}
+
+.camera-container img,
+.camera-container video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100vh;
+  width: auto;
+  object-fit: cover;
+}
+
+.btn-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.button-back,
+.button-post,
+.button-take {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100px;
+  max-height: 100px;
+  overflow: hidden;
+  border-radius: 15%;
+  border-style: none;
+  margin-bottom: 4vw;
+  margin-left: 3vw;
+  cursor: pointer;
+  outline: none;
+}
+
+.button-back:active,
+.button-post:active,
+.button-take:active {
+  transform: translateY(5px);
+}
+
+.button-back:last-child,
+.button-post:last-child,
+.button-take:last-child {
+  margin-left: 15%;
+  margin-right: 3%;
+}
+
+.button-back img,
+.button-post img,
+.button-take img {
+  height: 100%;
+  border-radius: 15%;
+}
+
+.button-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  z-index: 1;
+  font-size: 5vw;
+  font-family: "RetroGaming";
+}

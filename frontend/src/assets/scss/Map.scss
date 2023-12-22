@@ -1,0 +1,40 @@
+.leaflet-container {
+  height: 80vh;
+  width: 100vw;
+}
+
+.button_l-p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.location {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: rgb(46, 46, 238);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.picture {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: rgb(255, 247, 0);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
