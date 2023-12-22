@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { Link } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "../assets/scss/Map.scss";
@@ -111,9 +112,9 @@ function Map() {
         <button type="button" className="location" onClick={showMyLocation}>
           Voir ma localisation
         </button>
-        <button type="button" className="picture">
+        <Link to="/camera" type="button" className="picture">
           Appareil photo
-        </button>
+        </Link>
       </div>
     </div>
   );

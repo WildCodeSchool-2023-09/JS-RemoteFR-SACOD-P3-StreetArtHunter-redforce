@@ -74,7 +74,7 @@ export default function Admin() {
       </button>
       {showStreetArtList && <List items={streetArtWorks} />}
 
-      <button type="button" className="signout-button">
+      <button type="button" className="signout-button-admin">
         <div className="button-text">Sign out</div>
       </button>
       <Link type="button" className="button-back-admin" to="/map">

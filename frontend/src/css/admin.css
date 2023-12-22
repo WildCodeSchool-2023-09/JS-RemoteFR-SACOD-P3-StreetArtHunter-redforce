@@ -28,7 +28,7 @@
 .validation,
 .profil-list-button,
 .artwork-list-button,
-.signout-button,
+.signout-button-admin,
 .button-back-admin {
   position: relative;
   display: flex;
@@ -52,14 +52,7 @@
 .validation:active,
 .profil-list-button:active,
 .artwork-list-button:active,
-.signout-button:active,
+.signout-button-admin:active,
 .button-back-admin:active {
   transform: translateY(5px);
-}
-
-.button-back:last-child,
-.button-post:last-child,
-.button-take:last-child {
-  margin-left: 15%;
-  margin-right: 3%;
 }
