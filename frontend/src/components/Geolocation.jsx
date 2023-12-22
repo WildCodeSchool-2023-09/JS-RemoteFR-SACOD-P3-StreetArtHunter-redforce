@@ -12,23 +12,23 @@ function Geolocation() {
     coordinates: { lat: "", lng: "" },
   });
 
-const onSuccess = (loc) => {
-  const crd = loc.coords;
-  if (
-    target.latitude === crd.latitude &&
-    target.longitude === crd.longitude
-  ) {
-    console.info("Congratulations, you've reached the target");
-    navigator.geolocation.clearWatch(id);
-  }
-  setLocation({
-    loaded: true,
-    coordinates: {
-      lat: loc.coords.latitude,
-      lng: loc.coords.longitude,
-    },
-  });
-};
+  const onSuccess = (loc) => {
+    const crd = loc.coords;
+    if (
+      target.latitude === crd.latitude &&
+      target.longitude === crd.longitude
+    ) {
+      console.info("Congratulations, you've reached the target");
+      navigator.geolocation.clearWatch(id);
+    }
+    setLocation({
+      loaded: true,
+      coordinates: {
+        lat: loc.coords.latitude,
+        lng: loc.coords.longitude,
+      },
+    });
+  };
 
   const onError = (error) => {
     setLocation({
