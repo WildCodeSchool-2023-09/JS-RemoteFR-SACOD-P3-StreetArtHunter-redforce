@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import { useState, useEffect } from "react";
 
 let id = 0;
