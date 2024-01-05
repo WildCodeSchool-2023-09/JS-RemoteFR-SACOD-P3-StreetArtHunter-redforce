@@ -8,6 +8,9 @@ import Geolocation from "../components/Geolocation";
 
 function Map() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
+  const mapRef = useRef(null);
+  const location = Geolocation();
+
   const getRandomImageUrl = () => {
     const randomImageIndex = Math.floor(Math.random() * 10) + 1;
     return `/background${randomImageIndex}.png`;
@@ -17,36 +20,37 @@ function Map() {
     setBackgroundImageUrl(getRandomImageUrl());
   }, []);
 
+  useEffect(() => {
+    if (location.loaded && !location.error && mapRef.current) {
+      mapRef.current.setView([
+        location.coordinates.lat,
+        location.coordinates.lng,
+      ]);
+    }
+  }, [location, mapRef.current]);
+
   const backgroundStyle = {
     backgroundImage: `url(${backgroundImageUrl})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    backgroundattachment: "fixed",
+    backgroundAttachment: "fixed",
     height: 844,
   };
-  const location = Geolocation();
+
   const center = {
     lat: 0,
     lng: 0,
   };
   const ZOOM_LEVEL = 13;
-  const mapRef = useRef(null);
-
-  if (location.loaded && !location.error) {
-    mapRef.current.setView([
-      location.coordinates.lat,
-      location.coordinates.lng,
-    ]);
-  } else {
-    console.error("error");
-  }
 
   const showMyLocation = () => {
-    mapRef.current.setView([
-      location.coordinates.lat,
-      location.coordinates.lng,
-    ]);
+    if (location.loaded && !location.error && mapRef.current) {
+      mapRef.current.setView([
+        location.coordinates.lat,
+        location.coordinates.lng,
+      ]);
+    }
   };
   const markersData = [
     {
@@ -80,8 +84,6 @@ function Map() {
       },
     },
   ];
-
-  // ...
 
   return (
     <div className="home-contenair" style={backgroundStyle}>
