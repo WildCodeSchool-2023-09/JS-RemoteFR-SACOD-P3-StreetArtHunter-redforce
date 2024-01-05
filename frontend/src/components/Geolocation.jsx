@@ -10,29 +10,28 @@ function Geolocation() {
   const [location, setLocation] = useState({
     loaded: false,
     coordinates: { lat: "", lng: "" },
+    error: null,
   });
 
-  const onSuccess = (loc) => {
-    const crd = loc.coords;
-    if (
-      target.latitude === crd.latitude &&
-      target.longitude === crd.longitude
-    ) {
+  const onSuccess = (position) => {
+    const { latitude, longitude } = position.coords;
+
+    if (target.latitude === latitude && target.longitude === longitude) {
       console.info("Congratulations, you've reached the target");
       navigator.geolocation.clearWatch(id);
     }
+
     setLocation({
       loaded: true,
-      coordinates: {
-        lat: loc.coords.latitude,
-        lng: loc.coords.longitude,
-      },
+      coordinates: { lat: latitude, lng: longitude },
+      error: null,
     });
   };
 
   const onError = (error) => {
     setLocation({
       loaded: true,
+      coordinates: { lat: "", lng: "" },
       error,
     });
   };
@@ -46,12 +45,20 @@ function Geolocation() {
     } else {
       const options = {
         enableHighAccuracy: true,
-        timeout: 4000,
+        timeout: 10000,
         maximumAge: 0,
       };
       id = navigator.geolocation.watchPosition(onSuccess, onError, options);
     }
+
+    // Cleanup the watcher when component unmounts
+    return () => {
+      if (id) {
+        navigator.geolocation.clearWatch(id);
+      }
+    };
   }, []);
+
   return location;
 }
 
