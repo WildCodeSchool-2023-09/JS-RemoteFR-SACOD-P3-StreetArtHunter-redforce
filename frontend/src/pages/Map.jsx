@@ -80,10 +80,9 @@ function Map() {
             </Popup>
           </Marker>
         )}
-        {markersData.map((marker, index) => (
+        {markersData.map((marker) => (
           <Marker
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
+            key={marker.id}
             icon={new L.Icon({ iconUrl: marker.iconUrl, iconSize: [25, 25] })}
             position={marker.coordinates}
           >
