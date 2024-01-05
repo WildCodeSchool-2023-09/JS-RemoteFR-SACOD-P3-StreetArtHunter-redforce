@@ -138,9 +138,6 @@ function Map() {
             src="../../public/cameralogo.png"
           />
         </Link>
-        <button type="button" className="picture">
-          Appareil photo
-        </button>
       </div>
     </div>
   );
