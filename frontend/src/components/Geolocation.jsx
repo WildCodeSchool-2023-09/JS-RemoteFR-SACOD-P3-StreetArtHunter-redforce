@@ -47,7 +47,7 @@ function Geolocation() {
     } else {
       const options = {
         enableHighAccuracy: true,
-        timeout: 5000,
+        timeout: 4000,
         maximumAge: 0,
       };
       id = navigator.geolocation.watchPosition(onSuccess, onError, options);

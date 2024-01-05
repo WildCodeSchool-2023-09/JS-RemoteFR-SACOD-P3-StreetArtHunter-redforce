@@ -5,13 +5,6 @@ import L from "leaflet";
 import "../assets/scss/Map.scss";
 import Geolocation from "../components/Geolocation";
 
-const markerIcon = new L.Icon({
-  iconUrl: "",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-});
-
 function Map() {
   const location = Geolocation();
   const center = {
@@ -36,6 +29,40 @@ function Map() {
       location.coordinates.lng,
     ]);
   };
+  const markersData = [
+    {
+      id: 1,
+      coordinates: [50.622953, 2.285938],
+      iconUrl: "../../public/cat-art.png",
+      popupContent: {
+        title: "amazing cat",
+        image: "../../public/cat-art.png",
+        description: "bastille",
+      },
+    },
+    {
+      id: 2,
+      coordinates: [44.431393, 4.724903],
+      iconUrl: "../../public/lisa.png",
+      popupContent: {
+        title: "lisa",
+        image: "../../public/lisa.png",
+        description: "nation",
+      },
+    },
+    {
+      id: 3,
+      coordinates: [45.703845, -0.26289],
+      iconUrl: "../../public/artspert.png",
+      popupContent: {
+        title: "artspert",
+        image: "../../public/artspert.png",
+        description: "republique",
+      },
+    },
+  ];
+
+  // ...
 
   return (
     <div>
@@ -46,21 +73,32 @@ function Map() {
         />
         {location.loaded && !location.error && (
           <Marker
-            icon={markerIcon} // Corrected prop here
             position={[location.coordinates.lat, location.coordinates.lng]}
           >
             <Popup>
-              <img
-                src="../src/assets/images/cat-art.jpg"
-                height="200px"
-                width="200px"
-                alt="cat-art"
-              />
-              <br /> Amazing cat.
+              <p>ma localisation</p>
             </Popup>
-            <Popup>Amazing cat. {/* Updated content */}</Popup>
           </Marker>
         )}
+        {markersData.map((marker, index) => (
+          <Marker
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
+            icon={new L.Icon({ iconUrl: marker.iconUrl, iconSize: [25, 25] })}
+            position={marker.coordinates}
+          >
+            <Popup>
+              <p>{marker.popupContent.title}</p>
+              <img
+                src={marker.popupContent.image}
+                alt={marker.popupContent.title}
+                height="250px"
+                width="250px"
+              />
+              <p>{marker.popupContent.description}</p>
+            </Popup>
+          </Marker>
+        ))}
       </MapContainer>
       <div className="button_l-p">
         <button type="button" className="location" onClick={showMyLocation}>
