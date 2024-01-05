@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import "../css/galerie.css";
 
 function Gallery() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
@@ -24,12 +26,13 @@ function Gallery() {
   return (
     <div className="galery-contenair" style={backgroundStyle}>
       <img
+        className="galery-img"
         src="https://i.pinimg.com/originals/f2/38/54/f238549aa412e46c7c7e7ef5de103e70.jpg"
         alt="street art"
       />
-      <button type="button" className="back-button">
-        Retour
-      </button>
+      <Link to="/user-profil" type="button" className="back-button">
+        <div className="button-text">Back</div>
+      </Link>
     </div>
   );
 }
