@@ -1,12 +1,30 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Link } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import "../assets/scss/Map.scss";
+import "../css/Map.css";
 import Geolocation from "../components/Geolocation";
 
 function Map() {
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
+  const getRandomImageUrl = () => {
+    const randomImageIndex = Math.floor(Math.random() * 10) + 1;
+    return `/background${randomImageIndex}.png`;
+  };
+
+  useEffect(() => {
+    setBackgroundImageUrl(getRandomImageUrl());
+  }, []);
+
+  const backgroundStyle = {
+    backgroundImage: `url(${backgroundImageUrl})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundattachment: "fixed",
+    height: 844,
+  };
   const location = Geolocation();
   const center = {
     lat: 0,
@@ -62,7 +80,7 @@ function Map() {
   });
 
   return (
-    <div>
+    <div className="home-contenair" style={backgroundStyle}>
       <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -109,11 +127,23 @@ function Map() {
         </Marker>
       </MapContainer>
       <div className="button_l-p">
+        <Link
+          type="button"
+          to="/user-profil"
+          className="profil-button"
+          onClick={showMyLocation}
+        >
+          <div className="button-text-map">Profil</div>
+        </Link>
         <button type="button" className="location" onClick={showMyLocation}>
-          Voir ma localisation
+          <div className="button-text-map">Me</div>
         </button>
-        <Link to="/camera" type="button" className="picture">
-          Appareil photo
+        <Link to="/camera" type="button">
+          <img
+            className="cameralogo"
+            alt="camera logo"
+            src="../../public/cameralogo.png"
+          />
         </Link>
       </div>
     </div>

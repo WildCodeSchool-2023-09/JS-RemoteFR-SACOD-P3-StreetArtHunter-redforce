@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import { useState, useEffect } from "react";
 
 let id = 0;
@@ -13,20 +12,20 @@ function Geolocation() {
     coordinates: { lat: "", lng: "" },
   });
 
-  const onSuccess = (location) => {
-    const crd = location.coords;
+  const onSuccess = (loc) => {
+    const crd = loc.coords;
     if (
       target.latitude === crd.latitude &&
       target.longitude === crd.longitude
     ) {
-      console.info("Congratulation, you reach the target");
+      console.info("Congratulations, you've reached the target");
       navigator.geolocation.clearWatch(id);
     }
     setLocation({
       loaded: true,
       coordinates: {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
+        lat: loc.coords.latitude,
+        lng: loc.coords.longitude,
       },
     });
   };
