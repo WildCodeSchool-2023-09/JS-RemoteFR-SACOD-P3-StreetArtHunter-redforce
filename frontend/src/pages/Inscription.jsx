@@ -22,28 +22,30 @@ function Inscription() {
   };
   return (
     <div className="inscription-contenair" style={backgroundStyle}>
-      <img src="../public/logoSAH.png" alt="logo" className="logo" />
+      <img src="../public/logo-test3.png" alt="logo" className="logo" />
       <h1 className="inscription-title">Hunt for street art near you!</h1>
       <form className="form" action="" method="post">
-        <div>
+        <div className="label-container">
           <label htmlFor="Username" className="text-label">
             Username
           </label>
           <input type="Username" id="Username" required />
         </div>
-        <div>
+        <div className="label-container">
           <label htmlFor="email" className="text-label">
             E-mail
           </label>
           <input type="email" id="email" required />
         </div>
-        <div>
+        <div className="label-container">
           <label htmlFor="Password" className="password">
             Password
           </label>
           <input type="password" id="password" required />
         </div>
-        <button type="button">Sign Up</button>
+        <button className="connexion-button" type="button">
+          Sign Up
+        </button>
       </form>
     </div>
   );

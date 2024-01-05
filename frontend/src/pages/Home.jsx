@@ -22,17 +22,17 @@ function Home() {
   };
   return (
     <div className="home-contenair" style={backgroundStyle}>
-      <img src="../public/logoSAH.png" alt="logo" className="logo" />
+      <img src="../public/logo-test3.png" alt="logo" className="logo" />
       <h1 className="inscription-title">Hunt for street art near you!</h1>
       <h2 className="start-text">START GAME</h2>
       <form action="" method="post" className="form">
-        <div>
+        <div className="label-container">
           <label htmlFor="Username" className="text-label">
             Username/e-mail
           </label>
           <input type="email" id="Username" required />
         </div>
-        <div>
+        <div className="label-container">
           <label htmlFor="Password" className="password">
             Password
           </label>
