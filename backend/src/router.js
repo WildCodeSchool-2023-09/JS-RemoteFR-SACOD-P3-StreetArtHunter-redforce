@@ -7,16 +7,16 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Import itemControllers module for handling item-related operations
-const itemControllers = require("./controllers/itemControllers");
+const artworkControllers = require("./controllers/artworkController");
 
 // Route to get a list of items
-router.get("/items", itemControllers.browse);
+router.get("/artwork", artworkControllers.browse);
 
 // Route to get a specific item by ID
-router.get("/items/:id", itemControllers.read);
+router.get("/artwork/:id", artworkControllers.read);
 
 // Route to add a new item
-router.post("/items", itemControllers.add);
+router.post("/artwork", artworkControllers.add);
 
 /* ************************************************************************* */
 
