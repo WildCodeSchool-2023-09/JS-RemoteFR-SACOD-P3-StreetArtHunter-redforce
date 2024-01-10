@@ -68,7 +68,7 @@ DROP TABLE IF EXISTS `mydb`.`users` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`users` (
   `id` INT NOT NULL,
   `pseudo` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
+  `email` UNIQUE VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `inscription_date` DATE NOT NULL,
   `is_admin` TINYINT(0) NOT NULL,
