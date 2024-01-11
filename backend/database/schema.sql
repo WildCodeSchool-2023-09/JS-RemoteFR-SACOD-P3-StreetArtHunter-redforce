@@ -20,16 +20,16 @@ USE `mydb` ;
 -- -----------------------------------------------------
 -- Table `mydb`.`artwork`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`artwork` ;
+DROP TABLE IF EXISTS `mydb`.`artwork`;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`artwork` (
-  `id` INT NOT NULL,
+  `id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   `title` VARCHAR(45) NULL,
   `latitude` DECIMAL(9,6) NOT NULL,
   `longitude` DECIMAL(9,6) NOT NULL,
-  `first_post_date` DATE NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+  `first_post_date` DATE NULL
+) ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -38,7 +38,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`photos` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`photos` (
-  `id` INT NOT NULL,
+  `id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   `photo_src` VARCHAR(200) NULL,
   `post_date` DATE NOT NULL,
   `validation_status` TINYINT NOT NULL,
