@@ -1,6 +1,6 @@
 const AbstractManager = require("./AbstractManager");
 
-class ItemManager extends AbstractManager {
+class ArtworkManager extends AbstractManager {
   constructor() {
     // Call the constructor of the parent class (AbstractManager)
     // and pass the table name "item" as configuration
@@ -12,11 +12,11 @@ class ItemManager extends AbstractManager {
   async create(artwork) {
     // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (title, latitude, logitude, first_post_date) values (?, ?, ?, ?)`,
+      `insert into ${this.table} (title, latitude, longitude, first_post_date) values (?, ?, ?, ?)`,
       [
         artwork.title,
         artwork.latitude,
-        artwork.logitude,
+        artwork.longitude,
         artwork.first_post_date,
       ]
     );
@@ -61,4 +61,4 @@ class ItemManager extends AbstractManager {
   // }
 }
 
-module.exports = ItemManager;
+module.exports = ArtworkManager;
