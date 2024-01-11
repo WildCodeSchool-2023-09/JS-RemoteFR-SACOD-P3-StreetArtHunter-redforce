@@ -66,16 +66,16 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`users` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`users` (
-  `id` INT AUTO_INCREMENT NOT NULL,
+  `id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   `pseudo` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `hashed_password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
   `inscription_date` DATE NOT NULL,
-  `is_admin` TINYINT(0) NOT NULL,
-  PRIMARY KEY (`id`),
+  `is_admin` TINYINT NOT NULL,
   UNIQUE INDEX `pseudo_UNIQUE` (`pseudo` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
-ENGINE = InnoDB;
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
+) ENGINE = InnoDB;
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

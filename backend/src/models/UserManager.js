@@ -12,16 +12,15 @@ class UserManager extends AbstractManager {
   async create(user) {
     // Execute the SQL INSERT query to add a new user to the "user" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (pseudo, email, hashed_password, inscription_date, is_admin) values (?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (pseudo, email, password, inscription_date, is_admin) values (?, ?, ?, ?, ?)`,
       [
         user.pseudo,
         user.email,
-        user.hashed_password,
+        user.hashedPassword,
         user.inscription_date,
         user.is_admin,
       ]
     );
-
     // Return the ID of the newly inserted user
     return result.insertId;
   }
@@ -31,7 +30,7 @@ class UserManager extends AbstractManager {
   async read(id) {
     // Execute the SQL SELECT query to retrieve a specific user by its ID
     const [rows] = await this.database.query(
-      `select id, pseudo, email, hashed_password, inscription_date, is_admin from ${this.table} where id = ?`,
+      `select id, pseudo, email, password, inscription_date, is_admin from ${this.table} where id = ?`,
       [id]
     );
 
@@ -42,7 +41,7 @@ class UserManager extends AbstractManager {
   async readAll() {
     // Execute the SQL SELECT query to retrieve all users from the "user" table
     const [rows] = await this.database.query(
-      `select id, email, is_admin from ${this.table}`
+      `select id, pseudo, email, password, inscription_date, is_admin from ${this.table}`
     );
 
     // Return the array of users
