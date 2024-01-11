@@ -17,7 +17,6 @@ router.get("/user", userControllers.browse);
 router.get("/artwork", artworkControllers.browse);
 router.get("/picture", pictureControllers.browse);
 
-
 // Route to get a specific item by ID
 router.get("/user/:id", userControllers.read);
 router.get("/artwork/:id", artworkControllers.read);
