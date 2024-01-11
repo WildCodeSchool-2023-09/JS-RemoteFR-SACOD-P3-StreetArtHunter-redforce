@@ -6,7 +6,7 @@ const router = express.Router();
 // Define Your API Routes Here
 /* ************************************************************************* */
 
-// Import itemControllers module for handling item-related operations
+// Import itemControllers module for handling artwork-related operations
 const artworkControllers = require("./controllers/artworkController");
 const userControllers = require("./controllers/userController");
 const pictureControllers = require("./controllers/pictureController");
@@ -16,6 +16,7 @@ const hashPasswords = require("./services/auth");
 router.get("/user", userControllers.browse);
 router.get("/artwork", artworkControllers.browse);
 router.get("/picture", pictureControllers.browse);
+
 
 // Route to get a specific item by ID
 router.get("/user/:id", userControllers.read);
