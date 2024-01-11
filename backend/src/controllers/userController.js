@@ -1,3 +1,4 @@
+const argon2 = require("argon2");
 // Import access to database tables
 const tables = require("../tables");
 
@@ -39,17 +40,27 @@ const read = async (req, res, next) => {
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
-  // Extract the user data from the request body
+  console.info(req.body);
   const user = req.body;
 
   try {
-    // Insert the user into the database
-    const insertId = await tables.users.create(user);
+    if (user.password) {
+      const hashedPassword = await argon2.hash(user.password);
+      delete user.password;
 
-    // Respond with HTTP 201 (Created) and the ID of the newly inserted user
-    res.status(201).json({ insertId });
+      const insertId = await tables.users.create({
+        pseudo: user.pseudo,
+        email: user.email,
+        hashedPassword,
+        inscription_date: user.inscription_date,
+        is_admin: user.is_admin,
+      });
+
+      res.status(201).json({ insertId });
+    } else {
+      throw new Error("Password is missing");
+    }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
