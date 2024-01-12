@@ -1,19 +1,25 @@
 const AbstractManager = require("./AbstractManager");
 
-class ItemManager extends AbstractManager {
+class PictureManager extends AbstractManager {
   constructor() {
     // Call the constructor of the parent class (AbstractManager)
     // and pass the table name "item" as configuration
-    super({ table: "item" });
+    super({ table: "photos" });
   }
 
   // The C of CRUD - Create operation
 
-  async create(item) {
+  async create(photo) {
     // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (title) values (?)`,
-      [item.title]
+      `insert into ${this.table} (photo_src, date_post, validation_status, user_id, artwork_id ) values (?, ?, ?, ?, ?)`,
+      [
+        photo.photo_src,
+        photo.date_post,
+        photo.validation_status,
+        photo.user_id,
+        photo.artwork_id,
+      ]
     );
 
     // Return the ID of the newly inserted item
@@ -56,4 +62,4 @@ class ItemManager extends AbstractManager {
   // }
 }
 
-module.exports = ItemManager;
+module.exports = PictureManager;
