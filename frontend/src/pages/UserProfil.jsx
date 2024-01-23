@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 import "../css/user-profile.css";
 
 function List({ items }) {
@@ -41,6 +42,8 @@ export default function Home() {
     backgroundPosition: "center",
     backgroundattachment: "fixed",
   };
+  const { user } = useUser();
+  console.info(user);
 
   return (
     <div className="profile-contenair" style={backgroundStyle}>
