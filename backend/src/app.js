@@ -15,8 +15,6 @@ const app = express();
 // eslint-disable-next-line import/no-extraneous-dependencies
 const cors = require("cors");
 
-app.use(cors());
-
 // You should NOT do that: such code uses the `cors` module to allow all origins, which can pose security issues.
 // For this pedagogical template, the CORS code is commented out to show the need for defining specific allowed origins.
 

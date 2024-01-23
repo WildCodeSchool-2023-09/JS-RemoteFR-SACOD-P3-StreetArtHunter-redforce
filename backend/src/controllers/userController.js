@@ -1,5 +1,6 @@
 const argon2 = require("argon2");
 // Import access to database tables
+const jwt = require("jsonwebtoken");
 const tables = require("../tables");
 
 // The B of BREAD - Browse (Read All) operation
@@ -52,13 +53,24 @@ const add = async (req, res, next) => {
         pseudo: user.pseudo,
         email: user.email,
         hashedPassword,
-        inscription_date: user.inscription_date,
-        is_admin: user.is_admin,
       });
 
       res.status(201).json({ insertId });
     } else {
       throw new Error("Password is missing");
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const login = async (req, res, next) => {
+  try {
+    const token = jwt.sign(req.user, process.env.APP_SECRET);
+    if (await tables.users.readByEmailWithPassword(req.body.email)) {
+      res.json({ succes: "user loged succes", token });
+    } else {
+      res.json({ error: "oups une email ou password incorrect" });
     }
   } catch (err) {
     next(err);
@@ -74,5 +86,6 @@ module.exports = {
   read,
   // edit,
   add,
+  login,
   // destroy,
 };

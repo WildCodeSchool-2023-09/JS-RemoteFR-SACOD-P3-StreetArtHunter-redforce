@@ -11,6 +11,7 @@ const artworkControllers = require("./controllers/artworkController");
 const userControllers = require("./controllers/userController");
 const pictureControllers = require("./controllers/pictureController");
 const hashPasswords = require("./services/auth");
+const verifyPasswords = require("./services/auth");
 
 // Route to get a list of items
 router.get("/user", userControllers.browse);
@@ -24,6 +25,7 @@ router.get("/picture/:id", pictureControllers.read);
 
 // Route to add a new item
 router.post("/user/", hashPasswords.hashPassword, userControllers.add);
+router.post("/login/", verifyPasswords.verifyPwd, userControllers.login);
 router.post("/artwork/", artworkControllers.add);
 router.post("/picture/", pictureControllers.add);
 
