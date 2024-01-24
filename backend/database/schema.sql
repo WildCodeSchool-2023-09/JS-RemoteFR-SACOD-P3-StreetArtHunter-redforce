@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`users` (
   `pseudo` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
-  `inscription_date` DATE NOT NULL,
+  `inscription_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `is_admin` TINYINT NOT NULL,
   UNIQUE INDEX `pseudo_UNIQUE` (`pseudo` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE

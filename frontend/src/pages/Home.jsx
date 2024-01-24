@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import "../css/home.css";
+import { Link } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { setUser } = useUser();
+  
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
-
+  
   const [login, setLogin] = useState({
     email: "johnnyboy59000@gmail.com",
     password: "admin",
@@ -46,6 +49,28 @@ function Home() {
     backgroundPosition: "center",
     backgroundAttachment: "fixed", // Correction : "backgroundattachment" -> "backgroundAttachment"
     height: 844,
+  };
+
+  const [login, setLogin] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setLogin({ ...login, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3310/api/login", login)
+      .then((res) => {
+        setUser(res.data.user);
+        console.info(res.data.user);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
@@ -102,6 +127,7 @@ function Home() {
           </div>
         </form>
       )}
+      <Link to="/user-profil">se rendre a la page profil</Link>
     </div>
   );
 }

@@ -5,10 +5,10 @@ const tables = require("../tables");
 const browse = async (req, res, next) => {
   try {
     // Fetch all items from the database
-    const photos = await tables.photos.readAll();
+    const items = await tables.item.readAll();
 
     // Respond with the items in JSON format
-    res.json(photos);
+    res.json(items);
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);
@@ -19,14 +19,14 @@ const browse = async (req, res, next) => {
 const read = async (req, res, next) => {
   try {
     // Fetch a specific item from the database based on the provided ID
-    const photo = await tables.photos.read(req.params.id);
+    const item = await tables.item.read(req.params.id);
 
     // If the item is not found, respond with HTTP 404 (Not Found)
     // Otherwise, respond with the item in JSON format
-    if (photo == null) {
+    if (item == null) {
       res.sendStatus(404);
     } else {
-      res.json(photo);
+      res.json(item);
     }
   } catch (err) {
     // Pass any errors to the error-handling middleware
@@ -39,15 +39,12 @@ const read = async (req, res, next) => {
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
-  // We know someone is authenticated
-  // Only allowed if admin
-
   // Extract the item data from the request body
-  const photo = { ...req.body, user_id: req.auth.sub };
+  const item = req.body;
 
   try {
     // Insert the item into the database
-    const insertId = await tables.photos.create(photo);
+    const insertId = await tables.item.create(item);
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });
