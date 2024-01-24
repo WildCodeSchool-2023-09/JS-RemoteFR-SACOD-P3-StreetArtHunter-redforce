@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
 import axios from "axios";
 import "../css/home.css";
 
@@ -47,18 +46,6 @@ function Home() {
       <img src="../public/logo-test3.png" alt="logo" className="logo" />
       <h1 className="inscription-title">Hunt for street art near you!</h1>
       <h2 className="start-text">START GAME</h2>
-      {isLoggedIn ? (
-        <div>
-          <h1>Bienvenue, utilisateur connecté !</h1>
-          <button
-            onClick={handleLogout}
-            className="logout-button"
-            type="button"
-          >
-            Déconnexion
-          </button>
-        </div>
-      ) : (
         <form onSubmit={handleSubmit} className="form">
           <div className="label-container">
             <label htmlFor="email" className="text-label">
@@ -95,7 +82,7 @@ function Home() {
             </button>
           </div>
         </form>
-      )}
+      }
     </div>
   );
 }
