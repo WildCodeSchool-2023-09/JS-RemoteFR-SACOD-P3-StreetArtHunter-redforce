@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../css/inscription.css";
 
 function Inscription() {
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const getRandomImageUrl = () => {
     const randomImageIndex = Math.floor(Math.random() * 10) + 1;
@@ -26,6 +30,7 @@ function Inscription() {
     pseudo: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -35,19 +40,26 @@ function Inscription() {
       [e.target.name]: e.target.value,
     });
     console.info(register);
+    setErrorMessage("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (register.password !== register.confirmPassword) {
+      setErrorMessage("Les mots de passe ne correspondent pas.");
+      return;
+    }
     axios
-      .post("http://localhost:3310/api/user", register)
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/user`, register)
       .then((res) => {
         console.info(res);
+        navigate("/map");
       })
       .catch((err) => {
         console.error(err);
       });
   };
+
   return (
     <div className="inscription-contenair" style={backgroundStyle}>
       <img src="../public/logo-test3.png" alt="logo" className="logo" />
@@ -89,6 +101,19 @@ function Inscription() {
             onChange={handleChange}
           />
         </div>
+        <div className="label-container">
+          <label htmlFor="confirmPassword" className="password">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            required
+            onChange={handleChange}
+          />
+        </div>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}{" "}
         <button className="connexion-button" type="submit">
           Sign Up
         </button>
