@@ -67,12 +67,27 @@ app.use(express.json());
 
 // Then, require the module and use it as middleware in your Express application:
 
-// const cookieParser = require("cookie-parser");
-// app.use(cookieParser());
+const cookieParser = require("cookie-parser");
+
+app.use(cookieParser());
 
 // Once `cookie-parser` is set up, you can read and set cookies in your routes.
 // For example, to set a cookie named "username" with the value "john":
 // res.cookie("username", "john");
+
+app.post("/api/login", (req, res) => {
+  // Vérification des identifiants de l'utilisateur...
+  res.cookie("session_cookie", "valeurDuCookie", {
+    httpOnly: true,
+    sameSite: "strict",
+  });
+  res.send({ success: true });
+});
+
+app.post("/api/logout", (req, res) => {
+  res.clearCookie("session_cookie");
+  res.send({ success: true });
+});
 
 // To read the value of a cookie named "username":
 // const username = req.cookies.username;

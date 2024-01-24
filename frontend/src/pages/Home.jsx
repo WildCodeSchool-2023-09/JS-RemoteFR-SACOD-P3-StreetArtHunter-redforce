@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../css/home.css";
 
 function Home() {
@@ -9,12 +10,17 @@ function Home() {
     password: "admin",
   });
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, login)
-      .then((res) => console.info(res.data))
+      .then((res) => {
+        console.info(res.data);
+        navigate("/map");
+      })
       .catch((err) => console.error(err));
   };
 

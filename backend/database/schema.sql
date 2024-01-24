@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`artwork` (
 DROP TABLE IF EXISTS `mydb`.`photos` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`photos` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  `id` INT AUTO_INCREMENT NOT NULL,
   `photo_src` VARCHAR(200) NULL,
   `post_date` DATE NOT NULL,
   `validation_status` TINYINT NOT NULL,

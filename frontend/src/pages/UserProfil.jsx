@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useUser } from "../context/UserContext";
 import "../css/user-profile.css";
 
@@ -22,6 +23,7 @@ export default function Home() {
   const [showUserArt, setShowUserArt] = useState(false);
   const [showPlayerRank, setShowPlayerRank] = useState(false);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
+  const navigate = useNavigate();
 
   const userArtWork = ["Œuvre 1", "Œuvre 2", "Œuvre 3"];
   const playerRankList = ["Player1", "Player2", "Player2"];
@@ -44,6 +46,15 @@ export default function Home() {
   };
   const { user } = useUser();
   console.info(user);
+
+  const handleSignOut = () => {
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/logout`)
+      .then(() => {
+        navigate("/Home");
+      })
+      .catch((err) => console.error(err));
+  };
 
   return (
     <div className="profile-contenair" style={backgroundStyle}>
@@ -74,7 +85,11 @@ export default function Home() {
         <button type="button" className="edit-profil-button">
           <div className="button-text">Edit profile</div>
         </button>
-        <button type="button" className="signout-button">
+        <button
+          type="button"
+          className="signout-button"
+          onClick={handleSignOut}
+        >
           <div className="button-text">Sign out</div>
         </button>
         <button type="button" className="deleteprofile-button">

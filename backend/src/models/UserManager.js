@@ -10,12 +10,11 @@ class UserManager extends AbstractManager {
   // The C of CRUD - Create operation
 
   async create(user) {
-    // Execute the SQL INSERT query to add a new user to the "user" table
+    const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
     const [result] = await this.database.query(
-      `insert into ${this.table} (pseudo, email, password, is_admin) values (?, ?, ?, ?)`,
-      [user.pseudo, user.email, user.hashedPassword, 0]
+      `insert into ${this.table} (pseudo, email, password, is_admin, inscription_date) values (?, ?, ?, ?, ?)`,
+      [user.pseudo, user.email, user.hashedPassword, 0, currentDate]
     );
-    // Return the ID of the newly inserted user
     return result.insertId;
   }
 
