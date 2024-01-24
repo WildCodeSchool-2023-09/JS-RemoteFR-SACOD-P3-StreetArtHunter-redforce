@@ -1,11 +1,21 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Webcam from "react-webcam";
 import "../css/camera.css";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 function Camera() {
   const webcamRef = useRef(null);
-  const [imgSrc, setImgSrc] = useState(null);
+  const [imgFile, setImgFile] = useState(null);
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const userToken = Cookies.get("monToken");
+    if (userToken) {
+      setToken(userToken);
+    }
+  }, []);
 
   const videoConstraints = {
     width: { ideal: 1080 },
@@ -15,16 +25,46 @@ function Camera() {
   };
 
   const capture = useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    setImgSrc(imageSrc);
+    const image = webcamRef.current.getScreenshot();
+    setImgFile(image);
   }, [webcamRef]);
+
+  const uploadImage = async (e) => {
+    e.preventDefault();
+    if (!imgFile) {
+      console.error("Pas de fichier à envoyer.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", imgFile);
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/picture`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        console.info("Image téléchargée avec succès :", response.data);
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de l'image", error);
+    }
+  };
 
   return (
     <div className="main-container">
       <div className="camera-container">
-        {imgSrc ? (
+        {imgFile ? (
           <img
-            src={imgSrc}
+            src={imgFile}
             alt="Captured"
             style={{ height: "100%", width: "100%", objectFit: "cover" }}
           />
@@ -43,19 +83,19 @@ function Camera() {
           type="button"
           className="button-back"
           to="/map"
-          onClick={() => setImgSrc(null)}
+          onClick={() => setImgFile(null)}
         >
           <img alt="button" src="../../public/boutonAB.png" />
           <div className="button-text">Back</div>
         </Link>
-        {!imgSrc && (
+        {!imgFile && (
           <button type="button" className="button-take" onClick={capture}>
             <img alt="button" src="../../public/boutonAB.png" />
             <div className="button-text">Snap</div>
           </button>
         )}
-        {imgSrc && (
-          <button type="button" className="button-post">
+        {imgFile && (
+          <button type="button" className="button-post" onClick={uploadImage}>
             <img alt="button" src="../../public/boutonAB.png" />
             <div className="button-text">Post</div>
           </button>
