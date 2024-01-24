@@ -4,7 +4,6 @@ import axios from "axios";
 import "../css/home.css";
 
 function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
 
   const [login, setLogin] = useState({
