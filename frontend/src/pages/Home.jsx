@@ -6,22 +6,30 @@ import "../css/home.css";
 function Home() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const [login, setLogin] = useState({
-    email: "johnnyboy59000@gmail.com",
+    email: "adminsah@gmail.com",
     password: "admin",
   });
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
 
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, login)
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, login, {
+        withCredentials: true,
+      })
       .then((res) => {
         console.info(res.data);
         navigate("/map");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        const message = err.response?.data?.error || "Une erreur est survenue";
+        setError(message);
+        console.error(err);
+      });
   };
 
   const handleChange = (e) => {
@@ -78,6 +86,7 @@ function Home() {
             required
           />
         </div>
+        {error && <div className="error-message">{error}</div>}
         <div className="home-button-container">
           <button className="connexion-button" type="submit">
             Connexion

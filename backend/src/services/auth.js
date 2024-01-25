@@ -35,6 +35,10 @@ const verifyPwd = async (req, res, next) => {
     const userhashed = await tables.users.readByEmailWithPassword(
       req.body.email
     );
+    if (!userhashed) {
+      res.status(422).json({ error: "Email ou mot de passe incorrect" });
+      return;
+    }
     if (await argon2.verify(userhashed.password, req.body.password)) {
       delete userhashed.password;
       req.user = userhashed;

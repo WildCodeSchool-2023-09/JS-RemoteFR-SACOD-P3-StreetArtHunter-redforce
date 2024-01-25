@@ -6,40 +6,40 @@ const tables = require("../tables");
 
 const login = async (req, res, next) => {
   try {
-    // Fetch a specific user from the database based on the provided email
+    // Récupérer un utilisateur spécifique de la base de données basé sur l'email fourni
     const user = await tables.users.readByEmailWithPassword(req.body.email);
 
-    if (user == null) {
-      res.sendStatus(422);
+    // Vérifier si l'utilisateur existe et si le mot de passe est fourni
+    if (!user || !user.password) {
+      res.status(422).json({ error: "Email ou mot de passe incorrect" });
       return;
     }
 
-    const verified = await argon2.verify(
-      user.hashed_password,
-      req.body.password
-    );
+    // Vérifier le mot de passe
+    const verified = await argon2.verify(user.password, req.body.password);
 
     if (verified) {
-      // Respond with the user and a signed token in JSON format (but without the hashed password)
-      delete user.hashed_password;
+      delete user.password;
 
-      const token = await jwt.sign(
+      // Créer le token JWT
+      const token = jwt.sign(
         { sub: user.id, isAdmin: user.isAdmin },
         process.env.APP_SECRET,
-        {
-          expiresIn: "1h",
-        }
+        { expiresIn: "1h" }
       );
 
-      res.json({
-        token,
-        user,
+      res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 3600000,
       });
+
+      res.json({ token, user });
     } else {
-      res.sendStatus(422);
+      res.status(422).json({ error: "Email ou mot de passe incorrect" });
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
