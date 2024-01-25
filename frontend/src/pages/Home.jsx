@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/home.css";
+import { useUser } from "../context/UserContext";
 
 function Home() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
@@ -10,6 +11,7 @@ function Home() {
     password: "admin",
   });
   const [error, setError] = useState("");
+  const { setUser } = useUser();
 
   const navigate = useNavigate();
 
@@ -23,6 +25,7 @@ function Home() {
       })
       .then((res) => {
         console.info(res.data);
+        setUser(res.data.user);
         navigate("/map");
       })
       .catch((err) => {
