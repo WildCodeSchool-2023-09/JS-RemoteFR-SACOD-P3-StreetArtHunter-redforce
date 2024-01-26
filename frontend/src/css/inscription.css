@@ -17,15 +17,19 @@
 
 .inscription-title {
   font-size: 20px;
-  margin-bottom: 15%;
+  margin-bottom: 10%;
   margin-left: 2%;
   font-family: "RetroGaming";
 }
 
-.connexion-button {
+.connexion-button,
+.back-button {
   display: block;
   height: 25px;
-  margin-top: 5px;
   margin-bottom: 10px;
   border-radius: 25px 25px 25px 25px;
+}
+
+.password {
+  margin-bottom: 3vw;
 }
