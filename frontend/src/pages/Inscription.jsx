@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/inscription.css";
 
 function Inscription() {
@@ -117,6 +117,11 @@ function Inscription() {
         <button className="connexion-button" type="submit">
           Sign Up
         </button>
+        <Link to="/">
+          <button className="back-button" type="submit">
+            Back
+          </button>
+        </Link>
       </form>
     </div>
   );
