@@ -53,7 +53,7 @@ export default function Home() {
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/api/logout`)
       .then(() => {
-        navigate("/Home");
+        navigate("/");
       })
       .catch((err) => console.error(err));
   };

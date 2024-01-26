@@ -117,7 +117,7 @@ function Inscription() {
         <button className="connexion-button" type="submit">
           Sign Up
         </button>
-        <Link to="/home">
+        <Link to="/">
           <button className="back-button" type="submit">
             Back
           </button>
