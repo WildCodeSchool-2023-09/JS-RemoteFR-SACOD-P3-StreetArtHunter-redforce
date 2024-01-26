@@ -1,3 +1,8 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .logo {
   width: 200px;
   height: auto;
@@ -55,8 +60,9 @@ input {
   align-items: center;
 }
 
-.connexion-button {
-  margin-top: 5%;
+.connexion-button,
+.register-visiteur,
+.register-button {
   margin-bottom: 5%;
   max-width: 150px;
   border-radius: 25px 25px 25px 25px;
@@ -67,6 +73,8 @@ input {
   max-width: 150px;
   border-radius: 25px 25px 25px 25px;
   font-family: "RetroGaming";
+  margin-bottom: 5%;
+  margin-top: 5%;
 }
 
 .text-label {

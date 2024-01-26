@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/home.css";
 import { useUser } from "../context/UserContext";
 
@@ -94,8 +94,11 @@ function Home() {
           <button className="connexion-button" type="submit">
             Connexion
           </button>
+          <button type="button" className="register-button">
+            <Link to="/inscription">Register</Link>
+          </button>
           <button className="connexion-visiteur" type="button">
-            Mode visiteur
+            Visitor mode
           </button>
         </div>
       </form>
