@@ -13,7 +13,6 @@ function Home() {
   const [error, setError] = useState("");
   const { setUser } = useUser();
   const navigate = useNavigate();
-  
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
