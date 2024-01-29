@@ -72,7 +72,7 @@ export default function Home() {
         })
         .then(() => {
           setUser(null);
-          navigate("/home");
+          navigate("/");
         })
         .catch((err) => {
           console.error("Erreur lors de la suppression du compte :", err);

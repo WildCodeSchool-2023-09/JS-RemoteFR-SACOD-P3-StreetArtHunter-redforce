@@ -5,15 +5,24 @@ import "../css/home.css";
 import { useUser } from "../context/UserContext";
 
 function Home() {
+  const [isVisitorMode, setIsVisitorMode] = useState(false);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const [login, setLogin] = useState({
     email: "adminsah@gmail.com",
     password: "admin",
   });
   const [error, setError] = useState("");
-  const { setUser } = useUser();
-
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsVisitorMode(!user);
+  }, [user]);
+
+  const handleVisitorModeClick = () => {
+    setIsVisitorMode(true);
+    navigate("/mapVisitor");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +35,12 @@ function Home() {
       .then((res) => {
         console.info(res.data);
         setUser(res.data.user);
-        navigate("/map");
+
+        if (isVisitorMode) {
+          navigate("/map");
+        } else {
+          navigate("/map");
+        }
       })
       .catch((err) => {
         const message = err.response?.data?.error || "Une erreur est survenue";
@@ -97,7 +111,11 @@ function Home() {
           <button type="button" className="register-button">
             <Link to="/inscription">Register</Link>
           </button>
-          <button className="connexion-visiteur" type="button">
+          <button
+            onClick={handleVisitorModeClick}
+            className="connexion-visiteur"
+            type="button"
+          >
             Visitor mode
           </button>
         </div>

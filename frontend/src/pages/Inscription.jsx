@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/inscription.css";
+import { useUser } from "../context/UserContext";
 
 function Inscription() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const { setUser } = useUser();
 
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const getRandomImageUrl = () => {
@@ -54,6 +56,7 @@ function Inscription() {
       .then((res) => {
         console.info(res);
         navigate("/map");
+        setUser({ pseudo: register.pseudo });
       })
       .catch((err) => {
         console.error(err);

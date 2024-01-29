@@ -9,6 +9,7 @@ import Admin from "./pages/Admin";
 import Gallery from "./pages/Gallery";
 import Camera from "./pages/Camera";
 import UserProvider from "./context/UserContext";
+import MapVisitor from "./pages/MapVisitor";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/map",
     element: <Map />,
+  },
+  {
+    path: "/mapVisitor",
+    element: <MapVisitor />,
   },
   {
     path: "/user-profil",

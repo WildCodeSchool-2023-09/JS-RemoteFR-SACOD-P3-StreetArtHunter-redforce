@@ -6,7 +6,7 @@ import L from "leaflet";
 import "../css/Map.css";
 import Geolocation from "../components/Geolocation";
 
-function Map() {
+function MapVisitor() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const mapRef = useRef(null);
   const location = Geolocation();
@@ -88,7 +88,7 @@ function Map() {
   return (
     <div className="home-contenair" style={backgroundStyle}>
       <MapContainer
-        className="leaflet-container"
+        className="leaflet-container-visitor"
         center={center}
         zoom={ZOOM_LEVEL}
         ref={mapRef}
@@ -125,28 +125,21 @@ function Map() {
           </Marker>
         ))}
       </MapContainer>
-      <div className="button_l-p">
-        <Link
-          type="button"
-          to="/user-profil"
-          className="profil-button"
-          onClick={showMyLocation}
-        >
-          <div className="button-text-map">Profil</div>
-        </Link>
+      <div className="button_l-p-visitor">
         <button type="button" className="location" onClick={showMyLocation}>
-          <div className="button-text-map">Me</div>
+          <div className="button-text-map-visitor">Me</div>
         </button>
-        <Link to="/camera" type="button">
-          <img
-            className="cameralogo"
-            alt="camera logo"
-            src="../../public/cameralogo.png"
-          />
-        </Link>
+        <div>
+          <Link to="/" className="connexion-button-visitor">
+            <div className="button-connexion-map-visitor">Connexion</div>
+          </Link>
+          <button type="button" className="register-button-visitor">
+            <Link to="/inscription">Register</Link>
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Map;
+export default MapVisitor;
