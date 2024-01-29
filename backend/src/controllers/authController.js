@@ -23,8 +23,6 @@ const login = async (req, res, next) => {
         process.env.APP_SECRET,
         { expiresIn: "1h" }
       );
-
-
       res.cookie("session_cookie", token, {
         httpOnly: true,
         sameSite: "strict",
