@@ -37,6 +37,9 @@ router.post("/login/", verifyPasswords.verifyPwd, userControllers.login);
 router.post("/artwork/", artworkControllers.add);
 router.post("/picture/", upload.single("avatar"), pictureControllers.add);
 
+// Route to delete a new item
+router.delete("/user/:id", userControllers.deleteUser);
+
 /* ************************************************************************* */
 
 module.exports = router;

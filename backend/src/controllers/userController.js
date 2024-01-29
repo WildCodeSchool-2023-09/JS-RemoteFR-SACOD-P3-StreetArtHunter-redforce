@@ -2,6 +2,9 @@ const argon2 = require("argon2");
 // Import access to database tables
 const jwt = require("jsonwebtoken");
 const tables = require("../tables");
+const UserManager = require("../models/UserManager");
+
+const userManager = new UserManager();
 
 // The B of BREAD - Browse (Read All) operation
 const browse = async (req, res, next) => {
@@ -77,8 +80,23 @@ const login = async (req, res, next) => {
 };
 
 // The D of BREAD - Destroy (Delete) operation
-// This operation is not yet implemented
+async function deleteUser(req, res) {
+  const userId = req.params.id;
 
+  try {
+    // Utilisez userManager pour appeler la méthode delete
+    await userManager.delete(userId);
+
+    // Répondez avec un statut 204 (No Content) pour indiquer que la suppression a réussi
+    res.status(204).send();
+  } catch (error) {
+    console.error("Erreur lors de la suppression de l'utilisateur :", error);
+    // Répondez avec un statut 500 (Internal Server Error) en cas d'erreur
+    res.status(500).json({
+      error: "Une erreur est survenue lors de la suppression de l'utilisateur",
+    });
+  }
+}
 // Ready to export the controller functions
 module.exports = {
   browse,
@@ -86,5 +104,5 @@ module.exports = {
   // edit,
   add,
   login,
-  // destroy,
+  deleteUser,
 };

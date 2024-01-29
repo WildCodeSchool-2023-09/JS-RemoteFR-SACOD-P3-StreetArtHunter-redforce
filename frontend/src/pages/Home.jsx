@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/home.css";
 import { useUser } from "../context/UserContext";
 
 function Home() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const [login, setLogin] = useState({
-    email: "diogo000@gmail.com",
-    password: "azerty1234",
+    email: "adminsah@gmail.com",
+    password: "admin",
   });
+  const [error, setError] = useState("");
   const { setUser } = useUser();
   const navigate = useNavigate();
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError("");
 
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, login)
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, login, {
+        withCredentials: true,
+      })
       .then((res) => {
         setUser(res.data.user);
         navigate("/map");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        const message = err.response?.data?.error || "Une erreur est survenue";
+        setError(message);
+        console.error(err);
+      });
   };
 
   const handleChange = (e) => {
@@ -79,12 +87,16 @@ function Home() {
             required
           />
         </div>
+        {error && <div className="error-message">{error}</div>}
         <div className="home-button-container">
           <button className="connexion-button" type="submit">
             Connexion
           </button>
+          <button type="button" className="register-button">
+            <Link to="/inscription">Register</Link>
+          </button>
           <button className="connexion-visiteur" type="button">
-            Mode visiteur
+            Visitor mode
           </button>
         </div>
       </form>

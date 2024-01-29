@@ -24,6 +24,7 @@ const login = async (req, res, next) => {
         { expiresIn: "1h" }
       );
 
+
       res.cookie("session_cookie", token, {
         httpOnly: true,
         sameSite: "strict",
