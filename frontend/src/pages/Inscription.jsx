@@ -39,7 +39,6 @@ function Inscription() {
       ...register,
       [e.target.name]: e.target.value,
     });
-    console.info(register);
     setErrorMessage("");
   };
 

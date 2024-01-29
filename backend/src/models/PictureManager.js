@@ -3,23 +3,17 @@ const AbstractManager = require("./AbstractManager");
 class PictureManager extends AbstractManager {
   constructor() {
     // Call the constructor of the parent class (AbstractManager)
-    // and pass the table name "item" as configuration
     super({ table: "photos" });
   }
 
   // The C of CRUD - Create operation
 
-  async create(photo) {
+  async create(photo, avatar) {
     // Execute the SQL INSERT query to add a new item to the "item" table
+    const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
     const [result] = await this.database.query(
-      `insert into ${this.table} (photo_src, date_post, validation_status, user_id, artwork_id ) values (?, ?, ?, ?, ?)`,
-      [
-        photo.photo_src,
-        photo.date_post,
-        photo.validation_status,
-        photo.user_id,
-        photo.artwork_id,
-      ]
+      `insert into ${this.table} (photo_src, post_date, validation_status, users_id, artwork_id) values (?, ?, ?, ?, ?)`,
+      [avatar, currentDate, 1, photo.users_id, photo.artwork_id]
     );
 
     // Return the ID of the newly inserted item

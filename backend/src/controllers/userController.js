@@ -44,7 +44,6 @@ const read = async (req, res, next) => {
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
-  console.info(req.body);
   const user = req.body;
 
   try {

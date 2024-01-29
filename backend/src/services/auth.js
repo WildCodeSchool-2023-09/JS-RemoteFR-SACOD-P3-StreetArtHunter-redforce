@@ -18,8 +18,6 @@ const hashPassword = async (req, res, next) => {
       const hashedPassword = await argon2.hash(password, hashingOptions);
 
       req.body.hashedPassword = hashedPassword;
-
-      console.info(req.body);
     } else {
       throw new Error("Password is missing");
     }

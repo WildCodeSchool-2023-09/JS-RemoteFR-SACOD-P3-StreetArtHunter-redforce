@@ -12,9 +12,7 @@ function Home() {
   });
   const [error, setError] = useState("");
   const { setUser } = useUser();
-
   const navigate = useNavigate();
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
@@ -24,7 +22,6 @@ function Home() {
         withCredentials: true,
       })
       .then((res) => {
-        console.info(res.data);
         setUser(res.data.user);
         navigate("/map");
       })
