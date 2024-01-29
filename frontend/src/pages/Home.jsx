@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/home.css";
+import { useUser } from "../context/UserContext";
 
 function Home() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const [login, setLogin] = useState({
-    email: "johnnyboy59000@gmail.com",
-    password: "admin",
+    email: "diogo000@gmail.com",
+    password: "azerty1234",
   });
-
+  const { setUser } = useUser();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -18,7 +19,7 @@ function Home() {
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, login)
       .then((res) => {
-        console.info(res.data);
+        setUser(res.data.user);
         navigate("/map");
       })
       .catch((err) => console.error(err));

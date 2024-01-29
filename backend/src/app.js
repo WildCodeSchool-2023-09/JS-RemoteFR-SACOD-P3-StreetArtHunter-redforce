@@ -75,20 +75,6 @@ app.use(cookieParser());
 // For example, to set a cookie named "username" with the value "john":
 // res.cookie("username", "john");
 
-app.post("/api/login", (req, res) => {
-  // Vérification des identifiants de l'utilisateur...
-  res.cookie("session_cookie", "valeurDuCookie", {
-    httpOnly: true,
-    sameSite: "strict",
-  });
-  res.send({ success: true });
-});
-
-app.post("/api/logout", (req, res) => {
-  res.clearCookie("session_cookie");
-  res.send({ success: true });
-});
-
 // To read the value of a cookie named "username":
 // const username = req.cookies.username;
 
@@ -130,6 +116,8 @@ app.get("*", (req, res) => {
   res.sendFile(`${reactBuildPath}/index.html`);
 });
 */
+
+app.use("/public", express.static("public"));
 
 app.use("*", (req, res) => {
   if (req.originalUrl.includes("assets")) {

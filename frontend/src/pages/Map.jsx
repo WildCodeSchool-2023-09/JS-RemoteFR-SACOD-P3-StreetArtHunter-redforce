@@ -5,11 +5,14 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "../css/Map.css";
 import Geolocation from "../components/Geolocation";
+import { useUser } from "../context/UserContext";
 
 function Map() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const mapRef = useRef(null);
   const location = Geolocation();
+  const { user } = useUser();
+  console.info(user);
 
   const getRandomImageUrl = () => {
     const randomImageIndex = Math.floor(Math.random() * 10) + 1;
@@ -55,7 +58,7 @@ function Map() {
   const markersData = [
     {
       id: 1,
-      coordinates: [50.622953, 2.285938],
+      coordinates: [50.622553, 2.285938],
       iconUrl: "../../public/cat-art.png",
       popupContent: {
         title: "amazing cat",
@@ -65,7 +68,7 @@ function Map() {
     },
     {
       id: 2,
-      coordinates: [44.431393, 4.724903],
+      coordinates: [44.131393, 4.724903],
       iconUrl: "../../public/lisa.png",
       popupContent: {
         title: "lisa",

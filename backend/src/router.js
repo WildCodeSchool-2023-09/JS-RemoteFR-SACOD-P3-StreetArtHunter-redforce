@@ -1,5 +1,7 @@
 const express = require("express");
+const multer = require("multer");
 
+const upload = multer({ dest: "public/uploads" });
 const router = express.Router();
 
 /* ************************************************************************* */
@@ -12,6 +14,12 @@ const userControllers = require("./controllers/userController");
 const pictureControllers = require("./controllers/pictureController");
 const hashPasswords = require("./services/auth");
 const verifyPasswords = require("./services/auth");
+
+/** AUTH */
+const authController = require("./controllers/authController");
+
+router.post("/login", authController.login);
+router.post("/logout", authController.logout);
 
 // Route to get a list of items
 router.get("/user", userControllers.browse);
@@ -27,7 +35,7 @@ router.get("/picture/:id", pictureControllers.read);
 router.post("/user/", hashPasswords.hashPassword, userControllers.add);
 router.post("/login/", verifyPasswords.verifyPwd, userControllers.login);
 router.post("/artwork/", artworkControllers.add);
-router.post("/picture/", pictureControllers.add);
+router.post("/picture/", upload.single("avatar"), pictureControllers.add);
 
 /* ************************************************************************* */
 
