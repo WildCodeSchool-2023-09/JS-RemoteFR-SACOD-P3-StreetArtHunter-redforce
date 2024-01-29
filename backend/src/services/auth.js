@@ -36,7 +36,7 @@ const verifyPwd = async (req, res, next) => {
       req.body.email
     );
     if (!userhashed) {
-      res.status(422).json({ error: "Email ou mot de passe incorrect" });
+      res.status(422).json({ error: "Incorrect e-mail or password." });
       return;
     }
     if (await argon2.verify(userhashed.password, req.body.password)) {
@@ -44,7 +44,7 @@ const verifyPwd = async (req, res, next) => {
       req.user = userhashed;
       next();
     } else {
-      res.status(422).json({ error: "oups une email ou password incorrect" });
+      res.status(422).json({ error: "Incorrect e-mail or password." });
     }
   } catch (err) {
     next(err);

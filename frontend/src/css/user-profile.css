@@ -31,11 +31,13 @@
 .player-name {
   margin: 1rem;
   text-align: center;
+  font-family: "RetroGaming";
 }
 
 .coin {
   width: 2rem;
   margin-right: 1rem;
+  font-family: "RetroGaming";
 }
 
 .money-count {

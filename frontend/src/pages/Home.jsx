@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/home.css";
+import "../css/errorMessage.css";
 import { useUser } from "../context/UserContext";
+import ErrorPopup from "./Error/ConfirmationComposant/Error422";
 
 function Home() {
   const [isVisitorMode, setIsVisitorMode] = useState(false);
@@ -14,6 +16,8 @@ function Home() {
   const [error, setError] = useState("");
   const { user, setUser } = useUser();
   const navigate = useNavigate();
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setIsVisitorMode(!user);
@@ -44,7 +48,8 @@ function Home() {
       })
       .catch((err) => {
         const message = err.response?.data?.error || "Une erreur est survenue";
-        setError(message);
+        setErrorMessage(message);
+        setShowErrorPopup(true);
         console.error(err);
       });
   };
@@ -82,6 +87,7 @@ function Home() {
             E-mail
           </label>
           <input
+            className="inpu"
             type="email"
             id="email"
             name="email"
@@ -95,6 +101,7 @@ function Home() {
             Password
           </label>
           <input
+            className="inpu"
             type="password"
             id="password"
             name="password"
@@ -104,6 +111,12 @@ function Home() {
           />
         </div>
         {error && <div className="error-message">{error}</div>}
+        {showErrorPopup && (
+          <ErrorPopup
+            errorMessage={errorMessage}
+            onClose={() => setShowErrorPopup(false)}
+          />
+        )}
         <div className="home-button-container">
           <button className="connexion-button" type="submit">
             Connexion

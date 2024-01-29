@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import ErrorPopup from "./Error/ConfirmationComposant/ErrorPasswordsMatch";
 import "../css/inscription.css";
 import { useUser } from "../context/UserContext";
 
 function Inscription() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+
   const { setUser } = useUser();
+
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
 
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const getRandomImageUrl = () => {
@@ -48,7 +52,8 @@ function Inscription() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (register.password !== register.confirmPassword) {
-      setErrorMessage("Les mots de passe ne correspondent pas.");
+      setErrorMessage("Passwords do not match. Try again !");
+      setShowErrorPopup(true);
       return;
     }
     axios
@@ -116,7 +121,6 @@ function Inscription() {
             onChange={handleChange}
           />
         </div>
-        {errorMessage && <div className="error-message">{errorMessage}</div>}{" "}
         <button className="connexion-button" type="submit">
           Sign Up
         </button>
@@ -126,6 +130,12 @@ function Inscription() {
           </button>
         </Link>
       </form>
+      {showErrorPopup && (
+        <ErrorPopup
+          errorMessage={errorMessage}
+          onClose={() => setShowErrorPopup(false)}
+        />
+      )}
     </div>
   );
 }
