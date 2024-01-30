@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -9,6 +10,7 @@ import { useUser } from "../context/UserContext";
 
 function Map() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
+  const [artworks, setArtworks] = useState([]);
   const mapRef = useRef(null);
   const location = Geolocation();
   const { user } = useUser();
@@ -31,6 +33,13 @@ function Map() {
       ]);
     }
   }, [location, mapRef.current]);
+
+  axios
+    .get(`${import.meta.env.VITE_BACKEND_URL}/api/pictures/artworks`)
+    .then((res) => {
+      setArtworks(res.data[0]);
+    })
+    .catch((err) => console.error(err));
 
   const backgroundStyle = {
     backgroundImage: `url(${backgroundImageUrl})`,
@@ -55,38 +64,6 @@ function Map() {
       ]);
     }
   };
-  const markersData = [
-    {
-      id: 1,
-      coordinates: [50.622553, 2.285938],
-      iconUrl: "../../public/cat-art.png",
-      popupContent: {
-        title: "amazing cat",
-        image: "../../public/cat-art.png",
-        description: "bastille",
-      },
-    },
-    {
-      id: 2,
-      coordinates: [44.131393, 4.724903],
-      iconUrl: "../../public/lisa.png",
-      popupContent: {
-        title: "lisa",
-        image: "../../public/lisa.png",
-        description: "nation",
-      },
-    },
-    {
-      id: 3,
-      coordinates: [45.703845, -0.26289],
-      iconUrl: "../../public/artspert.png",
-      popupContent: {
-        title: "artspert",
-        image: "../../public/artspert.png",
-        description: "republique",
-      },
-    },
-  ];
 
   return (
     <div className="home-contenair" style={backgroundStyle}>
@@ -104,21 +81,23 @@ function Map() {
             </Popup>
           </Marker>
         )}
-        {markersData.map((marker) => (
+        {artworks.map((artwork) => (
           <Marker
-            key={marker.id}
-            icon={new L.Icon({ iconUrl: marker.iconUrl, iconSize: [25, 25] })}
-            position={marker.coordinates}
+            key={artwork.id}
+            icon={
+              new L.Icon({ iconUrl: artwork.photo_src, iconSize: [25, 25] })
+            }
+            position={(artwork.latitude, artwork.longitude)}
           >
             <Popup>
-              <p>{marker.popupContent.title}</p>
+              <p>{artwork.title}</p>
               <img
-                src={marker.popupContent.image}
-                alt={marker.popupContent.title}
+                src={artwork.photo_src}
+                alt={artwork.title}
                 height="250px"
                 width="250px"
               />
-              <p>{marker.popupContent.description}</p>
+              <p>{artwork.title}</p>
             </Popup>
           </Marker>
         ))}

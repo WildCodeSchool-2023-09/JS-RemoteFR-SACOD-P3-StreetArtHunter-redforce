@@ -78,7 +78,7 @@ function Camera() {
           // Autres propriétés d'œuvre d'art que vous pourriez avoir
         })
         .then((res) => {
-          console.info("Artwork créé avec succès :", res.data);
+          setIdArtwork(res.data.insertId);
         })
         .catch((err) => console.error(err));
     }
@@ -90,10 +90,8 @@ function Camera() {
     if (!imgFile) {
       console.error("Pas de fichier à envoyer.");
     }
-
     try {
       const formData = new FormData();
-
       formData.append("avatar", dataURItoBlob(imgFile), "avatar.jpg");
       formData.append("users_id", user.id);
       formData.append("artwork_id", idArtwork);

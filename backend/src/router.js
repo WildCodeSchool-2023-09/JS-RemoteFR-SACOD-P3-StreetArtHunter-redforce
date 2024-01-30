@@ -25,6 +25,7 @@ router.post("/logout", authController.logout);
 router.get("/user", userControllers.browse);
 router.get("/artwork", artworkControllers.browse);
 router.get("/picture", pictureControllers.browse);
+router.get("/pictures/artworks", pictureControllers.readAllPictureWithArtwork);
 
 // Route to get a specific item by ID
 router.get("/user/:id", userControllers.read);
@@ -39,6 +40,7 @@ router.post("/picture/", upload.single("avatar"), pictureControllers.add);
 
 // Route to delete a new item
 router.delete("/user/:id", userControllers.deleteUser);
+router.delete("/artwork/:id", artworkControllers.deleteArtwork);
 
 /* ************************************************************************* */
 

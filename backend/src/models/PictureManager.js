@@ -41,6 +41,15 @@ class PictureManager extends AbstractManager {
     return rows;
   }
 
+  async readAllByArtworkId() {
+    // Execute the SQL SELECT query to retrieve all items from the "item" table
+    const [rows] = await this.database.query(
+      `SELECT * FROM ${this.table} AS p JOIN artwork AS a ON p.artwork_id = a.id;`
+    );
+
+    // Return the array of items
+    return rows;
+  }
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing item
 

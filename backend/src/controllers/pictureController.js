@@ -16,6 +16,19 @@ const browse = async (req, res, next) => {
   }
 };
 
+const readAllPictureWithArtwork = async (req, res, next) => {
+  try {
+    // Fetch all items from the database
+    const artworks = await tables.photos.readAllByArtworkId();
+
+    // Respond with the items in JSON format
+    res.json(artworks);
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+
 // The R of BREAD - Read operation
 const read = async (req, res, next) => {
   try {
@@ -72,6 +85,7 @@ const add = async (req, res, next) => {
 // Ready to export the controller functions
 module.exports = {
   browse,
+  readAllPictureWithArtwork,
   read,
   // edit,
   add,
