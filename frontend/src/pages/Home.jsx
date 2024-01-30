@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/home.css";
-import "../css/errorMessage.css";
 import { useUser } from "../context/UserContext";
-import ErrorPopup from "./Error/ConfirmationComposant/Error422";
 
 function Home() {
   const [isVisitorMode, setIsVisitorMode] = useState(false);
@@ -13,11 +12,8 @@ function Home() {
     email: "adminsah@gmail.com",
     password: "admin",
   });
-  const [error, setError] = useState("");
   const { user, setUser } = useUser();
   const navigate = useNavigate();
-  const [showErrorPopup, setShowErrorPopup] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setIsVisitorMode(!user);
@@ -30,7 +26,6 @@ function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
 
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, login, {
@@ -48,9 +43,9 @@ function Home() {
       })
       .catch((err) => {
         const message = err.response?.data?.error || "Une erreur est survenue";
-        setErrorMessage(message);
-        setShowErrorPopup(true);
         console.error(err);
+        toast.dismiss();
+        toast.error(message);
       });
   };
 
@@ -110,13 +105,6 @@ function Home() {
             required
           />
         </div>
-        {error && <div className="error-message">{error}</div>}
-        {showErrorPopup && (
-          <ErrorPopup
-            errorMessage={errorMessage}
-            onClose={() => setShowErrorPopup(false)}
-          />
-        )}
         <div className="home-button-container">
           <button className="connexion-button" type="submit">
             Connexion

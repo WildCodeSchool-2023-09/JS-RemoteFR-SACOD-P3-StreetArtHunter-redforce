@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import ErrorPopup from "./Error/ConfirmationComposant/ErrorPasswordsMatch";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../css/inscription.css";
 import { useUser } from "../context/UserContext";
 
 function Inscription() {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
 
   const { setUser } = useUser();
-
-  const [showErrorPopup, setShowErrorPopup] = useState(false);
 
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const getRandomImageUrl = () => {
@@ -45,15 +43,12 @@ function Inscription() {
       ...register,
       [e.target.name]: e.target.value,
     });
-    console.info(register);
-    setErrorMessage("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (register.password !== register.confirmPassword) {
-      setErrorMessage("Passwords do not match. Try again !");
-      setShowErrorPopup(true);
+      toast.error("Passwords do not match. Try again !");
       return;
     }
     axios
@@ -130,12 +125,6 @@ function Inscription() {
           </button>
         </Link>
       </form>
-      {showErrorPopup && (
-        <ErrorPopup
-          errorMessage={errorMessage}
-          onClose={() => setShowErrorPopup(false)}
-        />
-      )}
     </div>
   );
 }
