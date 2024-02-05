@@ -48,7 +48,9 @@ function Inscription() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (register.password !== register.confirmPassword) {
-      toast.error("Passwords do not match. Try again !");
+      toast.error("Passwords do not match. Try again !", {
+        className: "toast-custom-style",
+      });
       return;
     }
     axios

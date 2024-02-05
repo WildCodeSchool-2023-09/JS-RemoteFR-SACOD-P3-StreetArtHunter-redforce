@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/home.css";
+import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "../context/UserContext";
 
 function Home() {
@@ -45,7 +46,14 @@ function Home() {
         const message = err.response?.data?.error || "Une erreur est survenue";
         console.error(err);
         toast.dismiss();
-        toast.error(message);
+        toast.error(message, {
+          style: {
+            background: "red",
+            color: "white",
+            fontFamily: "RetroGaming, sans-serif",
+            textAlign: "center",
+          },
+        });
       });
   };
 

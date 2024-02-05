@@ -25,6 +25,8 @@ export default function Home() {
   const [showUserArt, setShowUserArt] = useState(false);
   const [showPlayerRank, setShowPlayerRank] = useState(false);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false); // State for the confirmation popup
   const navigate = useNavigate();
   const { user } = useUser();
 
@@ -61,51 +63,49 @@ export default function Home() {
 
   const handleConfirmDeleteProfile = () => {
     if (user && user.id) {
+      if (passwordConfirmation !== user.hashedPassword) {
+        toast.error("Password confirmation does not match");
+        return;
+      }
+
       axios
         .delete(`${import.meta.env.VITE_BACKEND_URL}/api/user/${user.id}`, {
           withCredentials: true,
         })
         .then(() => {
-          setUser(null);
-          navigate("/");
-          toast.success("Profil supprimé avec succès !");
+          toast.success("Profile deleted successfully!", {
+            style: {
+              background: "red",
+              color: "white",
+              fontFamily: "RetroGaming, sans-serif",
+              textAlign: "center",
+            },
+          });
+
+          axios
+            .post(`${import.meta.env.VITE_BACKEND_URL}/api/logout`)
+            .then(() => {
+              setUser(null);
+              navigate("/");
+            })
+            .catch((err) => console.error(err));
         })
         .catch((err) => {
-          console.error("Erreur lors de la suppression du compte :", err);
+          console.error(err);
         });
     }
   };
 
+  const openConfirmDelete = () => {
+    setConfirmDeleteOpen(true);
+  };
+
+  const closeConfirmDelete = () => {
+    setConfirmDeleteOpen(false);
+  };
+
   const handleDeleteProfile = () => {
-    toast.dark(
-      <div>
-        <div>Êtes-vous sûr de vouloir supprimer votre profil ?</div>
-        <button
-          type="button"
-          onClick={() => {
-            handleConfirmDeleteProfile();
-            toast.dismiss();
-          }}
-        >
-          Confirmer
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            toast.dismiss();
-          }}
-        >
-          Annuler
-        </button>
-      </div>,
-      {
-        position: "top-center",
-        closeButton: false,
-        closeOnClick: false,
-        draggable: false,
-        autoClose: false,
-      }
-    );
+    openConfirmDelete();
   };
 
   return (
@@ -144,14 +144,43 @@ export default function Home() {
         >
           <div className="button-text">Sign out</div>
         </button>
-        <button
-          type="button"
-          className="delete-profile-button"
-          onClick={handleDeleteProfile}
-        >
-          <div className="button-text">Delete Profile</div>
-        </button>
+        <div className="delete-profile-container">
+          <button
+            type="button"
+            className="delete-profile-button"
+            onClick={handleDeleteProfile}
+          >
+            <div className="button-text">Delete Profile</div>
+          </button>
+        </div>
       </div>
+      {confirmDeleteOpen && (
+        <div className="password-confirmation-popup">
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+          />
+          <button
+            type="button"
+            onClick={() => {
+              handleConfirmDeleteProfile();
+              closeConfirmDelete();
+            }}
+          >
+            Confirm
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              closeConfirmDelete();
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      )}
       <ToastContainer />
     </div>
   );
