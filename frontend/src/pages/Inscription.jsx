@@ -43,7 +43,8 @@ export default function Inscription() {
       ...register,
       [e.target.name]: e.target.value,
     });
-    
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (register.password !== register.confirmPassword) {
