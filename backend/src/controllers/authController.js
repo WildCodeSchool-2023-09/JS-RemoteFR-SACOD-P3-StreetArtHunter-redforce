@@ -1,7 +1,5 @@
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
-
-// Import access to database tables
 const tables = require("../tables");
 
 const login = async (req, res, next) => {
@@ -30,7 +28,9 @@ const login = async (req, res, next) => {
 
       res.json({ user });
     } else {
-      res.status(422).json({ error: "Email ou mot de passe incorrect" });
+      res
+        .status(422)
+        .json({ error: "Incorrect e-mail or password. Try again !" });
     }
   } catch (err) {
     next(err);

@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -7,9 +6,8 @@ import L from "leaflet";
 import "../css/Map.css";
 import Geolocation from "../components/Geolocation";
 
-function Map() {
+function MapVisitor() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
-  const [artworks, setArtworks] = useState([]);
   const mapRef = useRef(null);
   const location = Geolocation();
 
@@ -31,17 +29,6 @@ function Map() {
     }
   }, [location, mapRef.current]);
 
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/api/pictures/artworks`)
-      .then((res) => {
-        setArtworks(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
-
   const backgroundStyle = {
     backgroundImage: `url(${backgroundImageUrl})`,
     backgroundSize: "cover",
@@ -55,7 +42,7 @@ function Map() {
     lat: 0,
     lng: 0,
   };
-  const ZOOM_LEVEL = 16;
+  const ZOOM_LEVEL = 13;
 
   const showMyLocation = () => {
     if (location.loaded && !location.error && mapRef.current) {
@@ -65,14 +52,43 @@ function Map() {
       ]);
     }
   };
-
-  const LATITUDE_OFFSET = 0.00008; // Valeur de décalage pour la latitude
-  const LONGITUDE_OFFSET = 0.00008;
+  const markersData = [
+    {
+      id: 1,
+      coordinates: [50.622953, 2.285938],
+      iconUrl: "../../public/cat-art.png",
+      popupContent: {
+        title: "amazing cat",
+        image: "../../public/cat-art.png",
+        description: "bastille",
+      },
+    },
+    {
+      id: 2,
+      coordinates: [44.431393, 4.724903],
+      iconUrl: "../../public/lisa.png",
+      popupContent: {
+        title: "lisa",
+        image: "../../public/lisa.png",
+        description: "nation",
+      },
+    },
+    {
+      id: 3,
+      coordinates: [45.703845, -0.26289],
+      iconUrl: "../../public/artspert.png",
+      popupContent: {
+        title: "artspert",
+        image: "../../public/artspert.png",
+        description: "republique",
+      },
+    },
+  ];
 
   return (
     <div className="home-contenair" style={backgroundStyle}>
       <MapContainer
-        className="leaflet-container"
+        className="leaflet-container-visitor"
         center={center}
         zoom={ZOOM_LEVEL}
         ref={mapRef}
@@ -90,52 +106,40 @@ function Map() {
             </Popup>
           </Marker>
         )}
-        {artworks.map((artwork, index) => (
+        {markersData.map((marker) => (
           <Marker
-            key={artwork.id}
-            icon={
-              new L.Icon({ iconUrl: artwork.photo_src, iconSize: [25, 25] })
-            }
-            position={[
-              parseFloat(artwork.latitude) + index * LATITUDE_OFFSET,
-              parseFloat(artwork.longitude) - index * LONGITUDE_OFFSET,
-            ]}
+            key={marker.id}
+            icon={new L.Icon({ iconUrl: marker.iconUrl, iconSize: [25, 25] })}
+            position={marker.coordinates}
           >
             <Popup>
-              <p>{artwork.title}</p>
+              <p>{marker.popupContent.title}</p>
               <img
-                src={artwork.photo_src}
-                alt={artwork.title}
+                src={marker.popupContent.image}
+                alt={marker.popupContent.title}
                 height="250px"
                 width="250px"
               />
-              <p>{artwork.title}</p>
+              <p>{marker.popupContent.description}</p>
             </Popup>
           </Marker>
         ))}
       </MapContainer>
-      <div className="button_l-p">
-        <Link
-          type="button"
-          to="/user-profil"
-          className="profil-button"
-          onClick={showMyLocation}
-        >
-          <div className="button-text-map">Profil</div>
-        </Link>
+      <div className="button_l-p-visitor">
         <button type="button" className="location" onClick={showMyLocation}>
-          <div className="button-text-map">Me</div>
+          <div className="button-text-map-visitor">Me</div>
         </button>
-        <Link to="/camera" type="button">
-          <img
-            className="cameralogo"
-            alt="camera logo"
-            src="../../public/cameralogo.png"
-          />
-        </Link>
+        <div>
+          <Link to="/" className="connexion-button-visitor">
+            <div className="button-connexion-map-visitor">Connexion</div>
+          </Link>
+          <button type="button" className="register-button-visitor">
+            <Link to="/inscription">Register</Link>
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Map;
+export default MapVisitor;

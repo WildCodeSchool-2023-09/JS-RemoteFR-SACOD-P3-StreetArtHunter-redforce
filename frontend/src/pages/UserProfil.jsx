@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useUser } from "../context/UserContext";
-import ConfirmationDialog from "../components/ConfirmationDialog";
-
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../css/user-profile.css";
+import PropTypes from "prop-types";
+import { useUser } from "../context/UserContext";
 
 function List({ items }) {
   return (
@@ -25,10 +25,10 @@ export default function Home() {
   const [showUserArt, setShowUserArt] = useState(false);
   const [showPlayerRank, setShowPlayerRank] = useState(false);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false); // State for the confirmation popup
   const navigate = useNavigate();
   const { user } = useUser();
-  console.info(user);
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const userArtWork = ["Œuvre 1", "Œuvre 2", "Œuvre 3"];
   const playerRankList = ["Player1", "Player2", "Player2"];
@@ -61,28 +61,51 @@ export default function Home() {
 
   const { setUser } = useUser();
 
-  const handleDeleteAccount = () => {
-    setShowConfirmDialog(true);
-  };
-
-  const handleConfirmDeleteAccount = () => {
+  const handleConfirmDeleteProfile = () => {
     if (user && user.id) {
+      if (passwordConfirmation !== user.hashedPassword) {
+        toast.error("Password confirmation does not match");
+        return;
+      }
+
       axios
         .delete(`${import.meta.env.VITE_BACKEND_URL}/api/user/${user.id}`, {
           withCredentials: true,
         })
         .then(() => {
-          setUser(null);
-          navigate("/home");
+          toast.success("Profile deleted successfully!", {
+            style: {
+              background: "red",
+              color: "white",
+              fontFamily: "RetroGaming, sans-serif",
+              textAlign: "center",
+            },
+          });
+
+          axios
+            .post(`${import.meta.env.VITE_BACKEND_URL}/api/logout`)
+            .then(() => {
+              setUser(null);
+              navigate("/");
+            })
+            .catch((err) => console.error(err));
         })
         .catch((err) => {
-          console.error("Erreur lors de la suppression du compte :", err);
+          console.error(err);
         });
     }
   };
 
-  const handleCancelDeleteAccount = () => {
-    setShowConfirmDialog(false);
+  const openConfirmDelete = () => {
+    setConfirmDeleteOpen(true);
+  };
+
+  const closeConfirmDelete = () => {
+    setConfirmDeleteOpen(false);
+  };
+
+  const handleDeleteProfile = () => {
+    openConfirmDelete();
   };
 
   return (
@@ -100,7 +123,7 @@ export default function Home() {
           className="galery-player"
           onClick={() => setShowUserArt(!showUserArt)}
         >
-          <div className="button-text">My galery</div>
+          <div className="button-text">My gallery</div>
         </Link>
         {showUserArt && <List items={userArtWork} />}
         <button
@@ -111,7 +134,7 @@ export default function Home() {
           <div className="button-text">Player Ranking</div>
         </button>
         {showPlayerRank && <List items={playerRankList} />}
-        <button type="button" className="edit-profil-button">
+        <button type="button" className="edit-profile-button">
           <div className="button-text">Edit profile</div>
         </button>
         <button
@@ -121,26 +144,44 @@ export default function Home() {
         >
           <div className="button-text">Sign out</div>
         </button>
-        <button
-          type="button"
-          className="deleteprofile-button"
-          onClick={handleDeleteAccount}
-        >
-          <div className="button-text">Delete profile</div>
-        </button>
-        <Link to="/map" type="button" className="back-button">
-          <div className="button-text">Back</div>
-        </Link>
+        <div className="delete-profile-container">
+          <button
+            type="button"
+            className="delete-profile-button"
+            onClick={handleDeleteProfile}
+          >
+            <div className="button-text">Delete Profile</div>
+          </button>
+        </div>
       </div>
-      {showConfirmDialog && (
-        <div className="confirmation-dialog">
-          <ConfirmationDialog
-            open={showConfirmDialog}
-            onConfirm={handleConfirmDeleteAccount}
-            onCancel={handleCancelDeleteAccount}
+      {confirmDeleteOpen && (
+        <div className="password-confirmation-popup">
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
+          <button
+            type="button"
+            onClick={() => {
+              handleConfirmDeleteProfile();
+              closeConfirmDelete();
+            }}
+          >
+            Confirm
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              closeConfirmDelete();
+            }}
+          >
+            Cancel
+          </button>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 }

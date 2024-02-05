@@ -8,12 +8,17 @@ a {
   color: inherit;
 }
 
+p {
+  font-family: "RetroGaming";
+  text-align: center;
+}
+
 .logo {
   width: 200px;
   height: auto;
   display: flex;
   justify-content: center;
-  margin-bottom: 40%;
+  margin-bottom: 30%;
   margin-left: 25%;
   border-radius: 15%;
   position: relative;
@@ -31,7 +36,7 @@ a {
 .inscription-title,
 .start-text {
   font-size: 20px;
-  margin-bottom: 15%;
+  margin-bottom: 10%;
   margin-left: 2%;
   font-family: "RetroGaming";
 }
@@ -42,10 +47,13 @@ a {
 
 input {
   display: block;
-  height: 25px;
+  height: 4vh;
+  width: 70vw;
   margin-top: 5px;
   margin-bottom: 10px;
   border-radius: 25px 25px 25px 25px;
+  font-family: "RetroGaming";
+  font-size: larger;
 }
 
 @media (max-width: 768px) {
@@ -65,7 +73,6 @@ input {
   align-items: center;
 }
 
-.connexion-button,
 .register-visiteur,
 .register-button,
 .connexion-visiteur,
@@ -84,6 +91,28 @@ input {
   -webkit-border-radius: 50px 50px 50px 50px;
   -moz-border-radius: 50px 50px 50px 50px;
   margin-bottom: 3vw;
+  margin-top: 3vw;
+  cursor: pointer;
+  outline: none;
+  -webkit-box-shadow: -10px 14px 11px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: -10px 14px 11px 0px rgba(0, 0, 0, 0.6);
+}
+
+.connexion-button {
+  font-family: "RetroGaming";
+  color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 177px;
+  min-height: 44px;
+  border: 1px solid #000000;
+  background-color: black;
+  border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  margin-bottom: 2vw;
   cursor: pointer;
   outline: none;
   -webkit-box-shadow: -10px 14px 11px 0px rgba(0, 0, 0, 0.6);
@@ -96,4 +125,8 @@ input {
 
 .password {
   font-family: "RetroGaming";
+}
+
+#password.inpu {
+  margin-bottom: 3vw;
 }

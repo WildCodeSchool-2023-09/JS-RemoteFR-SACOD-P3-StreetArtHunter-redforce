@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/home.css";
+import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "../context/UserContext";
 
 function Home() {
+  const [isVisitorMode, setIsVisitorMode] = useState(false);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const [login, setLogin] = useState({
     email: "diogo000@gmail.com",
     password: "azerty1234",
   });
-  const [error, setError] = useState("");
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsVisitorMode(!user);
+  }, [user]);
+
+  const handleVisitorModeClick = () => {
+    setIsVisitorMode(true);
+    navigate("/mapVisitor");
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
 
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, login, {
@@ -23,12 +33,25 @@ function Home() {
       })
       .then((res) => {
         setUser(res.data.user);
-        navigate("/map");
+
+        if (isVisitorMode) {
+          navigate("/map");
+        } else {
+          navigate("/map");
+        }
       })
       .catch((err) => {
         const message = err.response?.data?.error || "Une erreur est survenue";
-        setError(message);
         console.error(err);
+        toast.dismiss();
+        toast.error(message, {
+          style: {
+            background: "red",
+            color: "white",
+            fontFamily: "RetroGaming, sans-serif",
+            textAlign: "center",
+          },
+        });
       });
   };
 
@@ -65,6 +88,7 @@ function Home() {
             E-mail
           </label>
           <input
+            className="inpu"
             type="email"
             id="email"
             name="email"
@@ -78,6 +102,7 @@ function Home() {
             Password
           </label>
           <input
+            className="inpu"
             type="password"
             id="password"
             name="password"
@@ -86,7 +111,6 @@ function Home() {
             required
           />
         </div>
-        {error && <div className="error-message">{error}</div>}
         <div className="home-button-container">
           <button className="connexion-button" type="submit">
             Connexion
@@ -94,7 +118,11 @@ function Home() {
           <button type="button" className="register-button">
             <Link to="/inscription">Register</Link>
           </button>
-          <button className="connexion-visiteur" type="button">
+          <button
+            onClick={handleVisitorModeClick}
+            className="connexion-visiteur"
+            type="button"
+          >
             Visitor mode
           </button>
         </div>

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../css/inscription.css";
+import { useUser } from "../context/UserContext";
 
-function Inscription() {
+export default function Inscription() {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
+
+  const { setUser } = useUser();
 
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const getRandomImageUrl = () => {
@@ -39,13 +43,14 @@ function Inscription() {
       ...register,
       [e.target.name]: e.target.value,
     });
-    setErrorMessage("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (register.password !== register.confirmPassword) {
-      setErrorMessage("Les mots de passe ne correspondent pas.");
+      toast.error("Passwords do not match. Try again !", {
+        className: "toast-custom-style",
+      });
       return;
     }
     axios
@@ -53,6 +58,7 @@ function Inscription() {
       .then((res) => {
         console.info(res);
         navigate("/map");
+        setUser({ pseudo: register.pseudo });
       })
       .catch((err) => {
         console.error(err);
@@ -112,7 +118,6 @@ function Inscription() {
             onChange={handleChange}
           />
         </div>
-        {errorMessage && <div className="error-message">{errorMessage}</div>}{" "}
         <button className="connexion-button" type="submit">
           Sign Up
         </button>
@@ -125,5 +130,3 @@ function Inscription() {
     </div>
   );
 }
-
-export default Inscription;
