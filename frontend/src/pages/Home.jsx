@@ -24,7 +24,6 @@ function Home() {
     setIsVisitorMode(true);
     navigate("/mapVisitor");
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -33,7 +32,6 @@ function Home() {
         withCredentials: true,
       })
       .then((res) => {
-        console.info(res.data);
         setUser(res.data.user);
 
         if (isVisitorMode) {

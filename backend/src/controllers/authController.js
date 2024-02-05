@@ -21,15 +21,12 @@ const login = async (req, res, next) => {
         process.env.APP_SECRET,
         { expiresIn: "1h" }
       );
-
-      res.cookie("token", token, {
+      res.cookie("session_cookie", token, {
         httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 3600000,
+        sameSite: "strict",
       });
 
-      res.json({ token, user });
+      res.json({ user });
     } else {
       res
         .status(422)
@@ -40,6 +37,16 @@ const login = async (req, res, next) => {
   }
 };
 
+const logout = (req, res, next) => {
+  try {
+    res.clearCookie("session_cookie");
+    res.end();
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   login,
+  logout,
 };

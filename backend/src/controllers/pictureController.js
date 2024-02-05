@@ -1,4 +1,5 @@
 // Import access to database tables
+const fs = require("fs");
 const tables = require("../tables");
 
 // The B of BREAD - Browse (Read All) operation
@@ -43,11 +44,19 @@ const add = async (req, res, next) => {
   // Only allowed if admin
 
   // Extract the item data from the request body
-  const photo = { ...req.body, user_id: req.auth.sub };
+  const photo = req.body;
+  const avatar = req.file;
 
+  fs.renameSync(
+    `${avatar.destination}/${avatar.filename}`,
+    `${avatar.destination}/${avatar.filename}-${avatar.originalname}`
+  );
   try {
     // Insert the item into the database
-    const insertId = await tables.photos.create(photo);
+    const insertId = await tables.photos.create(
+      photo,
+      `${avatar.destination}/${avatar.filename}-${avatar.originalname}`
+    );
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });

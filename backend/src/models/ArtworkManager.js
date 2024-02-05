@@ -12,13 +12,8 @@ class ArtworkManager extends AbstractManager {
   async create(artwork) {
     // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await this.database.query(
-      `insert into ${this.table} (title, latitude, longitude, first_post_date) values (?, ?, ?, ?)`,
-      [
-        artwork.title,
-        artwork.latitude,
-        artwork.longitude,
-        artwork.first_post_date,
-      ]
+      `insert into ${this.table} (title, latitude, longitude) values (?, ?, ?)`,
+      [artwork.title, artwork.latitude, artwork.longitude]
     );
 
     // Return the ID of the newly inserted item
