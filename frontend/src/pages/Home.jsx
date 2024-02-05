@@ -7,8 +7,8 @@ import { useUser } from "../context/UserContext";
 function Home() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const [login, setLogin] = useState({
-    email: "adminsah@gmail.com",
-    password: "admin",
+    email: "diogo000@gmail.com",
+    password: "azerty1234",
   });
   const [error, setError] = useState("");
   const { setUser } = useUser();
