@@ -1,5 +1,8 @@
 // Import access to database tables
 const tables = require("../tables");
+const ArtworkManager = require("../models/ArtworkManager");
+
+const artworkManager = new ArtworkManager();
 
 // The B of BREAD - Browse (Read All) operation
 const browse = async (req, res, next) => {
@@ -55,6 +58,23 @@ const add = async (req, res, next) => {
 };
 
 // The D of BREAD - Destroy (Delete) operation
+async function deleteArtwork(req, res) {
+  const artworkId = req.params.id;
+
+  try {
+    // Utilisez userManager pour appeler la méthode delete
+    await artworkManager.delete(artworkId);
+
+    // Répondez avec un statut 204 (No Content) pour indiquer que la suppression a réussi
+    res.status(204).send();
+  } catch (error) {
+    console.error("Erreur lors de la suppression de l'utilisateur :", error);
+    // Répondez avec un statut 500 (Internal Server Error) en cas d'erreur
+    res.status(500).json({
+      error: "Une erreur est survenue lors de la suppression de l'utilisateur",
+    });
+  }
+}
 // This operation is not yet implemented
 
 // Ready to export the controller functions
@@ -63,5 +83,5 @@ module.exports = {
   read,
   // edit,
   add,
-  // destroy,
+  deleteArtwork,
 };

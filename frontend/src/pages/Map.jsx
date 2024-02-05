@@ -1,18 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "../css/Map.css";
 import Geolocation from "../components/Geolocation";
-import { useUser } from "../context/UserContext";
 
 function Map() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
+  const [artworks, setArtworks] = useState([]);
   const mapRef = useRef(null);
   const location = Geolocation();
-  const { user } = useUser();
-  console.info(user);
 
   const getRandomImageUrl = () => {
     const randomImageIndex = Math.floor(Math.random() * 10) + 1;
@@ -32,6 +31,17 @@ function Map() {
     }
   }, [location, mapRef.current]);
 
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/pictures/artworks`)
+      .then((res) => {
+        setArtworks(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   const backgroundStyle = {
     backgroundImage: `url(${backgroundImageUrl})`,
     backgroundSize: "cover",
@@ -45,7 +55,7 @@ function Map() {
     lat: 0,
     lng: 0,
   };
-  const ZOOM_LEVEL = 13;
+  const ZOOM_LEVEL = 16;
 
   const showMyLocation = () => {
     if (location.loaded && !location.error && mapRef.current) {
@@ -55,38 +65,9 @@ function Map() {
       ]);
     }
   };
-  const markersData = [
-    {
-      id: 1,
-      coordinates: [50.622553, 2.285938],
-      iconUrl: "../../public/cat-art.png",
-      popupContent: {
-        title: "amazing cat",
-        image: "../../public/cat-art.png",
-        description: "bastille",
-      },
-    },
-    {
-      id: 2,
-      coordinates: [44.131393, 4.724903],
-      iconUrl: "../../public/lisa.png",
-      popupContent: {
-        title: "lisa",
-        image: "../../public/lisa.png",
-        description: "nation",
-      },
-    },
-    {
-      id: 3,
-      coordinates: [45.703845, -0.26289],
-      iconUrl: "../../public/artspert.png",
-      popupContent: {
-        title: "artspert",
-        image: "../../public/artspert.png",
-        description: "republique",
-      },
-    },
-  ];
+
+  const LATITUDE_OFFSET = 0.00008; // Valeur de décalage pour la latitude
+  const LONGITUDE_OFFSET = 0.00008;
 
   return (
     <div className="home-contenair" style={backgroundStyle}>
@@ -104,21 +85,26 @@ function Map() {
             </Popup>
           </Marker>
         )}
-        {markersData.map((marker) => (
+        {artworks.map((artwork, index) => (
           <Marker
-            key={marker.id}
-            icon={new L.Icon({ iconUrl: marker.iconUrl, iconSize: [25, 25] })}
-            position={marker.coordinates}
+            key={artwork.id}
+            icon={
+              new L.Icon({ iconUrl: artwork.photo_src, iconSize: [25, 25] })
+            }
+            position={[
+              parseFloat(artwork.latitude) + index * LATITUDE_OFFSET,
+              parseFloat(artwork.longitude) - index * LONGITUDE_OFFSET,
+            ]}
           >
             <Popup>
-              <p>{marker.popupContent.title}</p>
+              <p>{artwork.title}</p>
               <img
-                src={marker.popupContent.image}
-                alt={marker.popupContent.title}
+                src={artwork.photo_src}
+                alt={artwork.title}
                 height="250px"
                 width="250px"
               />
-              <p>{marker.popupContent.description}</p>
+              <p>{artwork.title}</p>
             </Popup>
           </Marker>
         ))}

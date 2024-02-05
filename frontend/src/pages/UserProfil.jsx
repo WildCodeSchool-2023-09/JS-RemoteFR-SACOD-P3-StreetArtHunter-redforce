@@ -27,6 +27,7 @@ export default function Home() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const navigate = useNavigate();
   const { user } = useUser();
+  console.info(user);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const userArtWork = ["Œuvre 1", "Œuvre 2", "Œuvre 3"];
