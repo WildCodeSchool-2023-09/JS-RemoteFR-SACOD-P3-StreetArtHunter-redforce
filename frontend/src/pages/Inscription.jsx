@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../css/inscription.css";
 import { useUser } from "../context/UserContext";
 
-function Inscription() {
+export default function Inscription() {
   const navigate = useNavigate();
 
   const { setUser } = useUser();
@@ -129,5 +129,3 @@ function Inscription() {
     </div>
   );
 }
-
-export default Inscription;
