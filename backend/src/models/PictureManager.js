@@ -13,7 +13,7 @@ class PictureManager extends AbstractManager {
     const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
     const [result] = await this.database.query(
       `insert into ${this.table} (photo_src, post_date, validation_status, users_id, artwork_id) values (?, ?, ?, ?, ?)`,
-      [avatar, currentDate, 1, photo.users_id, photo.artwork_id]
+      [avatar, currentDate, 0, photo.users_id, photo.artwork_id]
     );
 
     // Return the ID of the newly inserted item
@@ -41,6 +41,41 @@ class PictureManager extends AbstractManager {
     return rows;
   }
 
+  async readAllByUserId(userId) {
+    // Execute the SQL SELECT query to retrieve all items from the "item" table
+    const [rows] = await this.database.query(
+      `SELECT photos.photo_src, photos.post_date, photos.validation_status
+      FROM photos
+      JOIN users ON photos.users_id = users.id
+      WHERE users.id = ?;`,
+      [userId]
+    );
+
+    // Return the array of items
+    return rows;
+  }
+
+  async readAllByArtworkId() {
+    // Execute the SQL SELECT query to retrieve all items from the "item" table
+    const [rows] = await this.database.query(
+      `SELECT * FROM ${this.table} AS p JOIN artwork AS a ON p.artwork_id = a.id;`
+    );
+
+    // Return the array of items
+    return rows;
+  }
+
+  async readAllByValidationStatus() {
+    // Execute the SQL SELECT query to retrieve all items from the "item" table
+    const [rows] = await this.database.query(
+      `SELECT photos.id, photos.photo_src, photos.validation_status
+      FROM photos
+      WHERE photos.validation_status = 0;`
+    );
+
+    // Return the array of items
+    return rows;
+  }
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing item
 

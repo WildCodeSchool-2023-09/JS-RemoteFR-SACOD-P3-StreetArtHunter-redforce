@@ -2,6 +2,7 @@ const argon2 = require("argon2");
 // Import access to database tables
 const jwt = require("jsonwebtoken");
 const tables = require("../tables");
+
 const UserManager = require("../models/UserManager");
 
 const userManager = new UserManager();

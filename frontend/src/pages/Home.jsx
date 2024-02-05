@@ -10,8 +10,8 @@ function Home() {
   const [isVisitorMode, setIsVisitorMode] = useState(false);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const [login, setLogin] = useState({
-    email: "adminsah@gmail.com",
-    password: "admin",
+    email: "diogo000@gmail.com",
+    password: "azerty1234",
   });
   const { user, setUser } = useUser();
   const navigate = useNavigate();
