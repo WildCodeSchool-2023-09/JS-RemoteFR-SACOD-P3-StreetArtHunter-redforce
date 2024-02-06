@@ -26,7 +26,7 @@ export default function Home() {
   const [showPlayerRank, setShowPlayerRank] = useState(false);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false); // State for the confirmation popup
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const navigate = useNavigate();
   const { user } = useUser();
 
@@ -153,6 +153,9 @@ export default function Home() {
             <div className="button-text">Delete Profile</div>
           </button>
         </div>
+        <Link to="/map" type="button" className="back-button">
+          <div className="button-text">Back</div>
+        </Link>
       </div>
       {confirmDeleteOpen && (
         <div className="password-confirmation-popup">

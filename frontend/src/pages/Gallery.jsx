@@ -45,7 +45,7 @@ function Gallery() {
         <img
           height="200px"
           width="200px"
-          key={photo.id} // Assurez-vous d'avoir une clé unique pour chaque élément lors du rendu d'une liste
+          key={photo.id}
           className="galery-img"
           src={photo.photo_src}
           alt={`street art - ${photo.id}`}

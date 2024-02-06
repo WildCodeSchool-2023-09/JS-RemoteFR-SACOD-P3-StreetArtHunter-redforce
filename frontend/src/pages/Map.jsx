@@ -66,7 +66,7 @@ function Map() {
     }
   };
 
-  const LATITUDE_OFFSET = 0.00008; // Valeur de décalage pour la latitude
+  const LATITUDE_OFFSET = 0.00008;
   const LONGITUDE_OFFSET = 0.00008;
 
   return (
