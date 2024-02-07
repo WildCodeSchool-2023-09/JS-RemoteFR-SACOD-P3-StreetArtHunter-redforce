@@ -109,7 +109,7 @@ function Map() {
             <Popup>
               <p>{artwork.title}</p>
               <img
-                src={artwork.photo_src}
+                src={`${import.meta.env.VITE_BACKEND_URL}/${artwork.photo_src}`}
                 alt={artwork.title}
                 height="250px"
                 width="250px"

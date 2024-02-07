@@ -25,7 +25,7 @@ function Gallery() {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundattachment: "fixed",
-    height: 844,
+    height: "auto",
   };
   useEffect(() => {
     axios
@@ -34,6 +34,7 @@ function Gallery() {
         setUserPhotos(res.data);
         console.info(res.data);
       })
+
       .catch((err) => {
         console.error(err);
       });
@@ -43,7 +44,7 @@ function Gallery() {
     <div className="galery-contenair" style={backgroundStyle}>
       {userPhotos.map((photo) => (
         <img
-          key={photo.id}
+          key={`photo_${photo.id}`}
           height="200px"
           width="200px"
           className="galery-img"

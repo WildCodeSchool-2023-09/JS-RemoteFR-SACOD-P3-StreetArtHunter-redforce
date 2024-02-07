@@ -10,6 +10,7 @@ function List({
   artworks,
   handleUserButtonClick,
   handleDeleteUser,
+  handleConfirmPhotoValidation,
 }) {
   return (
     <>
@@ -18,12 +19,17 @@ function List({
           {items.map((item) => (
             <li key={item.id} className="liste">
               <img
-                src={item.photo_src}
+                src={`${import.meta.env.VITE_BACKEND_URL}/${item.photo_src}`}
                 alt={item.id}
                 style={{ height: "200px", width: "200px" }}
               />
               <p>ID: {item.id}</p>
-              <p>validation_status: {item.validation_status}</p>
+              <button
+                type="button"
+                onClick={() => handleConfirmPhotoValidation(item.id)}
+              >
+                Confirm Photo
+              </button>
             </li>
           ))}
         </ul>
@@ -127,6 +133,7 @@ List.propTypes = {
   ),
   handleUserButtonClick: PropTypes.func.isRequired,
   handleDeleteUser: PropTypes.func.isRequired,
+  handleConfirmPhotoValidation: PropTypes.func.isRequired,
 };
 
 List.defaultProps = {
@@ -235,6 +242,36 @@ export default function Admin() {
     setShowDeleteConfirmation(false);
   };
 
+  const handleConfirmPhotoValidation = async (photoId) => {
+    // Mettre à jour l'état local des photos pour refléter le nouveau statut de validation
+    setValidationPhotos((prevPhotos) =>
+      prevPhotos.map((photo) =>
+        photo.id === photoId ? { ...photo, validation_status: 1 } : photo
+      )
+    );
+
+    try {
+      // Effectuer une requête PUT vers l'API backend pour confirmer la validation de la photo avec l'ID photoId
+      await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/picture/${photoId}`,
+
+        {
+          validation_status: 1,
+        }
+      );
+    } catch (error) {
+      // Gérer les erreurs en cas d'échec de la requête
+      console.error("Error confirming photo validation:", error);
+
+      // Annuler le changement dans l'état local si la requête a échoué
+      setValidationPhotos((prevPhotos) =>
+        prevPhotos.map((photo) =>
+          photo.id === photoId ? { ...photo, validation_status: 0 } : photo
+        )
+      );
+    }
+  };
+
   return (
     <div className="profile-contenair" style={backgroundStyle}>
       <button
@@ -249,6 +286,7 @@ export default function Admin() {
           items={validationPhotos}
           handleUserButtonClick={handleUserButtonClick}
           handleDeleteUser={handleDeleteConfirmation}
+          handleConfirmPhotoValidation={handleConfirmPhotoValidation}
         />
       )}
       <button
