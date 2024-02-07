@@ -94,7 +94,7 @@ function Map() {
           <Marker
             key={artwork.id}
             icon={
-              new L.Icon({ iconUrl: artwork.photo_src, iconSize: [25, 25] })
+              new L.Icon({ iconUrl: artwork.photo_src, iconSize: [50, 50] })
             }
             position={[
               parseFloat(artwork.latitude) + index * LATITUDE_OFFSET,

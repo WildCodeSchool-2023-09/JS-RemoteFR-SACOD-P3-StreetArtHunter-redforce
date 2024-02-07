@@ -25,7 +25,6 @@ const login = async (req, res, next) => {
         httpOnly: true,
         sameSite: "strict",
       });
-
       res.json({ user });
     } else {
       res
