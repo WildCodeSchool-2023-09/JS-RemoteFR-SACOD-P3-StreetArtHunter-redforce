@@ -55,7 +55,6 @@ function List({ items, profils, artworks }) {
         </ul>
       </div>
     </>
-
   );
 }
 
