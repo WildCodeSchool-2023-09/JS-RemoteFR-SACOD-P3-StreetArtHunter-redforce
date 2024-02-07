@@ -6,81 +6,96 @@ import "../css/admin.css";
 
 function List({ items, profils, artworks }) {
   return (
-    <div>
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-            <img
-              src={item.photo_src}
-              alt={item.id}
-              style={{ height: "100px", width: "100px" }}
-            />
-            <p>ID: {item.id}</p>
-            <p>validation_status: {item.validation_status}</p>
-            {/* Ajoutez d'autres informations si nécessaire */}
-          </li>
-        ))}
-      </ul>
-      <ul>
-        {profils.map((profil) => (
-          <li key={profil.id}>
-            <p>ID: {profil.id}</p>
-            <p>pseudo: {profil.pseudo}</p>
-            <p>email: {profil.email}</p>
-            <p>inscription_date: {profil.inscription_date}</p>
-            {/* Ajoutez d'autres informations si nécessaire */}
-          </li>
-        ))}
-      </ul>
-      <ul>
-        {artworks.map((artwork) => (
-          <li key={artwork.id}>
-            <p>ID: {artwork.id}</p>
-            <p>first_post_date: {artwork.first_post_date}</p>
-            <p>post_date: {artwork.post_date}</p>
-            <p>users_id: {artwork.users_id}</p>
-            <p>title: {artwork.title}</p>
-            <p>latitude: {artwork.latitude}</p>
-            <p>longitude: {artwork.longitude}</p>
-            {/* Ajoutez d'autres informations si nécessaire */}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <div className="cardelements">
+        <ul className="unordered">
+          {items.map((item) => (
+            <li key={item.id} className="liste">
+              <img
+                src={item.photo_src}
+                alt={item.id}
+                style={{ height: "200px", width: "200px" }}
+              />
+              <p>ID: {item.id}</p>
+              <p>validation_status: {item.validation_status}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="cardelements">
+        <ul className="unordered">
+          {profils.map((profil) => (
+            <li key={profil.id} className="liste">
+              <p>ID: {profil.id}</p>
+              <p>pseudo: {profil.pseudo}</p>
+              <p>email: {profil.email}</p>
+              <p>inscription_date: {profil.inscription_date}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="cardelements">
+        <ul className="unordered">
+          {artworks.map((artwork) => (
+            <li key={artwork.id} className="liste">
+              <p>ID: {artwork.id}</p>
+              <img
+                src={artwork.photo_src}
+                alt={artwork.id}
+                style={{ height: "200px", width: "200px" }}
+              />
+              <p>first_post_date: {artwork.first_post_date}</p>
+              <p>post_date: {artwork.post_date}</p>
+              <p>users_id: {artwork.users_id}</p>
+              <p>title: {artwork.title}</p>
+              <p>latitude: {artwork.latitude}</p>
+              <p>longitude: {artwork.longitude}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }
 
 List.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      photo_src: PropTypes.string.isRequired,
-      validation_status: PropTypes.number.isRequired,
+      id: PropTypes.number,
+      photo_src: PropTypes.string,
+      validation_status: PropTypes.number,
 
       // ... autres propriétés
     })
-  ).isRequired,
+  ),
   profils: PropTypes.arrayOf(
     PropTypes.shape({
-      email: PropTypes.string.isRequired,
-      id: PropTypes.number.isRequired,
-      pseudo: PropTypes.string.isRequired,
-      inscription_date: PropTypes.instanceOf(Date).isRequired,
+      email: PropTypes.string,
+      id: PropTypes.number,
+      pseudo: PropTypes.string,
+      inscription_date: PropTypes.string,
       // ... autres propriétés
     })
-  ).isRequired,
+  ),
   artworks: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      first_post_date: PropTypes.instanceOf(Date).isRequired,
-      post_date: PropTypes.instanceOf(Date).isRequired,
-      users_id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      latitude: PropTypes.number.isRequired,
-      longitude: PropTypes.number.isRequired,
+      id: PropTypes.number,
+      first_post_date: PropTypes.string,
+      photo_src: PropTypes.string,
+      post_date: PropTypes.string,
+      users_id: PropTypes.number,
+      title: PropTypes.string,
+      latitude: PropTypes.number,
+      longitude: PropTypes.number,
       // ... autres propriétés
     })
-  ).isRequired,
+  ),
+};
+
+List.defaultProps = {
+  items: [], // Add defaultProps for the "items" propType
+  profils: [], // Add defaultProps for the "profils" propType
+  artworks: [],
 };
 
 export default function Admin() {
@@ -108,7 +123,7 @@ export default function Admin() {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundattachment: "fixed",
-    height: 844,
+    height: 5000,
   };
 
   useEffect(() => {

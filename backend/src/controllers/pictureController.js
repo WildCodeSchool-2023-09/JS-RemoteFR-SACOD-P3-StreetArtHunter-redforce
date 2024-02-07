@@ -2,7 +2,6 @@
 const fs = require("fs");
 const tables = require("../tables");
 
-// The B of BREAD - Browse (Read All) operation
 const browse = async (req, res, next) => {
   try {
     // Fetch all items from the database
@@ -106,17 +105,12 @@ const add = async (req, res, next) => {
   }
 };
 
-// The D of BREAD - Destroy (Delete) operation
-// This operation is not yet implemented
-
-// Ready to export the controller functions
+// Exportez la méthode update avec les autres méthodes
 module.exports = {
   browse,
   readAllPictureWithArtwork,
   readAllPictureWithUser,
   readAllPictureWithValidationStatus,
   read,
-  // edit,
-  add,
-  // destroy,
+  add, // Ajoutez la méthode update ici
 };
