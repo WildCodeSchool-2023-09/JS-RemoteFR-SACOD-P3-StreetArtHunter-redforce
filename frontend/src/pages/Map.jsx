@@ -36,6 +36,7 @@ function Map() {
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/pictures/artworks`)
       .then((res) => {
         setArtworks(res.data);
+        console.info(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -55,26 +56,25 @@ function Map() {
     lat: 0,
     lng: 0,
   };
-  const ZOOM_LEVEL = 16;
+  const ZOOM_LEVEL = 17;
 
   const showMyLocation = () => {
     if (location.loaded && !location.error && mapRef.current) {
-      mapRef.current.setView([
-        location.coordinates.lat,
-        location.coordinates.lng,
-      ]);
+      mapRef.current.setView(
+        [location.coordinates.lat, location.coordinates.lng],
+        ZOOM_LEVEL
+      );
     }
   };
 
   const LATITUDE_OFFSET = 0.00008;
   const LONGITUDE_OFFSET = 0.00008;
-
   return (
     <div className="home-contenair" style={backgroundStyle}>
       <MapContainer
         className="leaflet-container"
         center={center}
-        zoom={ZOOM_LEVEL}
+        zoom={5}
         ref={mapRef}
       >
         <TileLayer
@@ -90,15 +90,20 @@ function Map() {
             </Popup>
           </Marker>
         )}
-        {artworks.map((artwork, index) => (
+        {artworks.map((artwork) => (
           <Marker
-            key={artwork.id}
+            key={artwork.photo_id}
             icon={
-              new L.Icon({ iconUrl: artwork.photo_src, iconSize: [50, 50] })
+              new L.Icon({
+                iconUrl: `${import.meta.env.VITE_BACKEND_URL}/${
+                  artwork.photo_src
+                }`,
+                iconSize: [50, 50],
+              })
             }
             position={[
-              parseFloat(artwork.latitude) + index * LATITUDE_OFFSET,
-              parseFloat(artwork.longitude) - index * LONGITUDE_OFFSET,
+              parseFloat(artwork.latitude) + LATITUDE_OFFSET,
+              parseFloat(artwork.longitude) + LONGITUDE_OFFSET,
             ]}
           >
             <Popup>

@@ -15,6 +15,8 @@ function Camera() {
   const mapRef = useRef(null);
   const navigate = useNavigate();
 
+  const navigate = useNavigate();
+
   const [imgFile, setImgFile] = useState(null);
   const [token, setToken] = useState("");
   const [artworks, setArtworks] = useState({});
@@ -104,9 +106,6 @@ function Camera() {
       );
 
       if (response.status === 201) {
-        console.info("Image téléchargée avec succès :", response.data);
-
-        // Redirection vers /map après avoir posté la photo
         navigate("/map");
       }
     } catch (error) {
