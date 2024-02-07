@@ -35,7 +35,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <ProtectedAdmin />,
+    element: <Admin />,
   },
   {
     path: "/galerie",
@@ -62,20 +62,6 @@ function ProtectedMap() {
 
   if (user) {
     return <Map />;
-  }
-
-  return <Navigate to="/" />;
-}
-
-function ProtectedAdmin() {
-  const { user } = useUser();
-
-  if (user) {
-    if (user.isAdmin) {
-      return <Admin />;
-    }
-
-    return <Navigate to="/" />;
   }
 
   return <Navigate to="/" />;

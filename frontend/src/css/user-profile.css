@@ -58,7 +58,8 @@
 .player-rank-button,
 .edit-profile-button,
 .signout-button,
-.delete-profile-button {
+.delete-profile-button,
+.admin-button {
   position: relative;
   display: flex;
   align-items: center;

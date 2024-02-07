@@ -1,3 +1,4 @@
+// Camera.jsx
 import React, { useRef, useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Webcam from "react-webcam";
