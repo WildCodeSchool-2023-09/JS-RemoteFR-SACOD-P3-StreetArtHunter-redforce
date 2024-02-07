@@ -51,7 +51,6 @@ function Geolocation() {
       id = navigator.geolocation.watchPosition(onSuccess, onError, options);
     }
 
-    // Cleanup the watcher when component unmounts
     return () => {
       if (id) {
         navigator.geolocation.clearWatch(id);

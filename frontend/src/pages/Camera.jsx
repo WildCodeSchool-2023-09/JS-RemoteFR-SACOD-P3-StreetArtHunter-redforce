@@ -11,11 +11,9 @@ import { roundToDecimalPlaces, dataURItoBlob } from "../services/Camera";
 function Camera() {
   const location = Geolocation();
 
-  // useRef
   const webcamRef = useRef(null);
   const mapRef = useRef(null);
 
-  // useState
   const [imgFile, setImgFile] = useState(null);
   const [token, setToken] = useState("");
   const [artworks, setArtworks] = useState({});
@@ -49,15 +47,12 @@ function Camera() {
   };
 
   const capture = useCallback(() => {
-    // Snap picture
     const image = webcamRef.current.getScreenshot();
     setImgFile(image);
 
-    /** User position */
     const userRoundLat = roundToDecimalPlaces(location.coordinates.lat, 2);
     const userRoundLng = roundToDecimalPlaces(location.coordinates.lng, 2);
 
-    /** Artwork position */
     const result = artworks
       .map((artwork) => {
         return userRoundLat === roundToDecimalPlaces(artwork.latitude, 2) &&
@@ -70,12 +65,10 @@ function Camera() {
     if (result.length !== 0) {
       setIdArtwork(result[0]);
     } else {
-      // Créer une nouvelle œuvre d'art avec les coordonnées de la localisation
       axios
         .post(`${import.meta.env.VITE_BACKEND_URL}/api/artwork`, {
           latitude: location.coordinates.lat,
           longitude: location.coordinates.lng,
-          // Autres propriétés d'œuvre d'art que vous pourriez avoir
         })
         .then((res) => {
           setIdArtwork(res.data.insertId);

@@ -17,7 +17,6 @@ function List({ items, profils, artworks }) {
             />
             <p>ID: {item.id}</p>
             <p>validation_status: {item.validation_status}</p>
-            {/* Ajoutez d'autres informations si nécessaire */}
           </li>
         ))}
       </ul>
@@ -28,7 +27,6 @@ function List({ items, profils, artworks }) {
             <p>pseudo: {profil.pseudo}</p>
             <p>email: {profil.email}</p>
             <p>inscription_date: {profil.inscription_date}</p>
-            {/* Ajoutez d'autres informations si nécessaire */}
           </li>
         ))}
       </ul>
@@ -42,7 +40,6 @@ function List({ items, profils, artworks }) {
             <p>title: {artwork.title}</p>
             <p>latitude: {artwork.latitude}</p>
             <p>longitude: {artwork.longitude}</p>
-            {/* Ajoutez d'autres informations si nécessaire */}
           </li>
         ))}
       </ul>
@@ -56,8 +53,6 @@ List.propTypes = {
       id: PropTypes.number.isRequired,
       photo_src: PropTypes.string.isRequired,
       validation_status: PropTypes.number.isRequired,
-
-      // ... autres propriétés
     })
   ).isRequired,
   profils: PropTypes.arrayOf(

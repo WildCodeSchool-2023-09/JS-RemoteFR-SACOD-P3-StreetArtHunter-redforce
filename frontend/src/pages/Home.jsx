@@ -88,7 +88,7 @@ function Home() {
             E-mail
           </label>
           <input
-            className="inpu"
+            className="input"
             type="email"
             id="email"
             name="email"
@@ -102,7 +102,7 @@ function Home() {
             Password
           </label>
           <input
-            className="inpu"
+            className="input"
             type="password"
             id="password"
             name="password"
