@@ -7,7 +7,6 @@ import "../css/galerie.css";
 function Gallery() {
   const { user } = useUser();
   const userId = user.id;
-  console.info(userId);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const [userPhotos, setUserPhotos] = useState([]);
 
@@ -33,6 +32,7 @@ function Gallery() {
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/pictures/user/${userId}`)
       .then((res) => {
         setUserPhotos(res.data);
+        console.info(res.data);
       })
       .catch((err) => {
         console.error(err);
@@ -43,11 +43,11 @@ function Gallery() {
     <div className="galery-contenair" style={backgroundStyle}>
       {userPhotos.map((photo) => (
         <img
+          key={photo.id}
           height="200px"
           width="200px"
-          key={photo.id}
           className="galery-img"
-          src={photo.photo_src}
+          src={`${import.meta.env.VITE_BACKEND_URL}/${photo.photo_src}`}
           alt={`street art - ${photo.id}`}
         />
       ))}

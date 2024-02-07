@@ -90,7 +90,7 @@ function Map() {
             </Popup>
           </Marker>
         )}
-        {artworks.map((artwork) => (
+        {artworks.map((artwork, index) => (
           <Marker
             key={artwork.photo_id}
             icon={
@@ -102,8 +102,8 @@ function Map() {
               })
             }
             position={[
-              parseFloat(artwork.latitude) + LATITUDE_OFFSET,
-              parseFloat(artwork.longitude) + LONGITUDE_OFFSET,
+              parseFloat(artwork.latitude) + index * LATITUDE_OFFSET,
+              parseFloat(artwork.longitude) - index * LONGITUDE_OFFSET,
             ]}
           >
             <Popup>
