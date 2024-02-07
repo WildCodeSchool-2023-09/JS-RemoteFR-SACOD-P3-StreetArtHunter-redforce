@@ -42,6 +42,7 @@ router.post("/user/", hashPasswords.hashPassword, userControllers.add);
 router.post("/login/", verifyPasswords.verifyPwd, userControllers.login);
 router.post("/artwork/", artworkControllers.add);
 router.post("/picture/", upload.single("avatar"), pictureControllers.add);
+router.post("/api/login", authController.login);
 
 // Route to delete a new item
 router.delete("/user/:id", userControllers.deleteUser);

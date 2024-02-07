@@ -105,12 +105,27 @@ const add = async (req, res, next) => {
   }
 };
 
-// Exportez la méthode update avec les autres méthodes
+const updateValidationStatus = async (req, res, next) => {
+  try {
+    const { photoId } = req.params;
+    const { validationStatus } = req.body;
+
+    await tables.photos.updateValidationStatus(photoId, validationStatus);
+
+    // Respond with HTTP 204 (No Content) to indicate success
+    res.sendStatus(204);
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+
 module.exports = {
   browse,
   readAllPictureWithArtwork,
   readAllPictureWithUser,
   readAllPictureWithValidationStatus,
   read,
-  add, // Ajoutez la méthode update ici
+  add,
+  updateValidationStatus,
 };

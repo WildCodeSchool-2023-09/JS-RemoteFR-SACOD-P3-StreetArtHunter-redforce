@@ -220,15 +220,17 @@ export default function Admin() {
     setConfirmDeleteUserId(null);
   };
 
-  const handleDeleteUser = async (userId) => {
+  const deleteUserAndAssociatedPhotos = async (userId) => {
     try {
       await axios.delete(
         `${import.meta.env.VITE_BACKEND_URL}/api/user/${userId}`
       );
+
       setUserProfileList(userProfileList.filter((user) => user.id !== userId));
     } catch (err) {
       console.error(err);
     }
+
     setConfirmDeleteUserId(null);
     setShowDeleteConfirmation(false);
   };
@@ -283,7 +285,9 @@ export default function Admin() {
               <button
                 className="button-delete-yes"
                 type="button"
-                onClick={() => handleDeleteUser(confirmDeleteUserId)}
+                onClick={() =>
+                  deleteUserAndAssociatedPhotos(confirmDeleteUserId)
+                }
               >
                 Yes
               </button>
