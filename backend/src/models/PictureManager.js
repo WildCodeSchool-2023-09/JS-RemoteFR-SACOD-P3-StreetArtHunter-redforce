@@ -56,11 +56,12 @@ class PictureManager extends AbstractManager {
   }
 
   async readAllByArtworkId() {
-    // Execute the SQL SELECT query to retrieve all items from the "item" table
+    // Execute the SQL SELECT query to retrieve specific columns from the tables
     const [rows] = await this.database.query(
       `SELECT p.id as photo_id, p.photo_src, a.title, a.latitude, a.longitude 
-     FROM ${this.table} AS p 
-     JOIN artwork AS a ON p.artwork_id = a.id;`
+       FROM ${this.table} AS p 
+       JOIN artwork AS a ON p.artwork_id = a.id
+       WHERE p.validation_status = 1;`
     );
 
     // Return the array of items

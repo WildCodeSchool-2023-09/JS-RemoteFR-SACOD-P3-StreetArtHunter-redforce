@@ -73,7 +73,6 @@ app.use(cookieParser());
 // Once `cookie-parser` is set up, you can read and set cookies in your routes.
 // For example, to set a cookie named "username" with the value "john":
 // res.cookie("username", "john");
-const authController = require("./controllers/authController");
 
 // To read the value of a cookie named "username":
 // const username = req.cookies.username;
@@ -82,8 +81,6 @@ const authController = require("./controllers/authController");
 
 // Import the API routes from the router module
 const router = require("./router");
-
-router.post("/api/login", authController.login);
 
 // Mount the API routes under the "/api" endpoint
 app.use("/api", router);
@@ -119,7 +116,7 @@ app.get("*", (req, res) => {
 });
 */
 
-app.use("/public", express.static("public"));
+app.use(express.static("public"));
 
 app.use("*", (req, res) => {
   if (req.originalUrl.includes("assets")) {

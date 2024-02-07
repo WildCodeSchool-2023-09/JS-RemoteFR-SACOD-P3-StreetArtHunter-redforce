@@ -105,6 +105,7 @@ function Camera() {
 
       if (response.status === 201) {
         navigate("/map");
+        console.info(formData);
       }
     } catch (error) {
       console.error("Erreur lors de l'envoi de l'image", error);
