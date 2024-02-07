@@ -1,5 +1,9 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";
@@ -9,8 +13,7 @@ import Map from "./pages/Map";
 import Admin from "./pages/Admin";
 import Gallery from "./pages/Gallery";
 import Camera from "./pages/Camera";
-import UserProvider from "./context/UserContext";
-import MapVisitor from "./pages/MapVisitor";
+import UserProvider, { useUser } from "./context/UserContext";
 import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
@@ -24,29 +27,79 @@ const router = createBrowserRouter([
   },
   {
     path: "/map",
-    element: <Map />,
-  },
-  {
-    path: "/mapVisitor",
-    element: <MapVisitor />,
+    element: <ProtectedMap />,
   },
   {
     path: "/user-profil",
-    element: <UserProfil />,
+    element: <ProtectedUserProfile />,
   },
   {
     path: "/admin",
-    element: <Admin />,
+    element: <ProtectedAdmin />,
   },
   {
     path: "/galerie",
-    element: <Gallery />,
+    element: <ProtectedGallery />,
   },
   {
     path: "/camera",
-    element: <Camera />,
+    element: <ProtectedCamera />,
   },
 ]);
+
+function ProtectedUserProfile() {
+  const { user } = useUser();
+
+  if (user) {
+    return <UserProfil />;
+  }
+
+  return <Navigate to="/" />;
+}
+
+function ProtectedMap() {
+  const { user } = useUser();
+
+  if (user) {
+    return <Map />;
+  }
+
+  return <Navigate to="/" />;
+}
+
+function ProtectedAdmin() {
+  const { user } = useUser();
+
+  if (user) {
+    if (user.isAdmin) {
+      return <Admin />;
+    }
+
+    return <Navigate to="/" />;
+  }
+
+  return <Navigate to="/" />;
+}
+
+function ProtectedGallery() {
+  const { user } = useUser();
+
+  if (user) {
+    return <Gallery />;
+  }
+
+  return <Navigate to="/" />;
+}
+
+function ProtectedCamera() {
+  const { user } = useUser();
+
+  if (user) {
+    return <Camera />;
+  }
+
+  return <Navigate to="/" />;
+}
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

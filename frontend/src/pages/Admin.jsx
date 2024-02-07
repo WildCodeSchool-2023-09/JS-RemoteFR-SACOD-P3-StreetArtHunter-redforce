@@ -55,6 +55,7 @@ function List({ items, profils, artworks }) {
         </ul>
       </div>
     </>
+
   );
 }
 
@@ -64,8 +65,6 @@ List.propTypes = {
       id: PropTypes.number,
       photo_src: PropTypes.string,
       validation_status: PropTypes.number,
-
-      // ... autres propriétés
     })
   ),
   profils: PropTypes.arrayOf(

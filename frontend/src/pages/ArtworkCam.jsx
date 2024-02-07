@@ -51,10 +51,6 @@ function ArtworkCam() {
 
       formData.append("avatar", dataURItoBlob(imgFile), "avatar.jpg");
       formData.append("users_id", 1);
-      /**
-       * 1er solution, proposé via la géoloc' une liste d'artwork a proximité
-       * 2eme solution, proposer une liste non exhaustive de tous les artworks
-       */
 
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/picture`,
