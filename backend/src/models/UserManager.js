@@ -11,9 +11,10 @@ class UserManager extends AbstractManager {
 
   async create(user) {
     const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+    const isAdmin = user.is_admin ? 1 : 0;
     const [result] = await this.database.query(
-      `insert into ${this.table} (pseudo, email, password, is_admin, inscription_date) values (?, ?, ?, ?, ?)`,
-      [user.pseudo, user.email, user.hashedPassword, 0, currentDate]
+      `INSERT INTO ${this.table} (pseudo, email, password, is_admin, inscription_date) VALUES (?, ?, ?, ?, ?)`,
+      [user.pseudo, user.email, user.hashedPassword, isAdmin, currentDate]
     );
     return result.insertId;
   }
@@ -61,12 +62,24 @@ class UserManager extends AbstractManager {
 
   // The D of CRUD - Delete operation
   // The D of CRUD - Delete operation
+  async deleteUserAndAssociatedPhotos(id) {
+    // Supprimer d'abord les photos associées à l'utilisateur
+    await this.database.query(`DELETE FROM photos WHERE users_id = ?`, [id]);
+
+    // Ensuite, supprimer l'utilisateur lui-même
+    const result = await this.delete(id);
+
+    return result;
+  }
+
   async delete(id) {
+    // Execute la requête SQL pour supprimer l'utilisateur avec l'ID spécifié
     const result = await this.database.query(
       `DELETE FROM ${this.table} WHERE id = ?`,
       [id]
     );
 
+    // Retourne true si au moins une ligne a été affectée, sinon retourne false
     return result.affectedRows > 0;
   }
 }

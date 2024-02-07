@@ -1,6 +1,5 @@
-// Camera.jsx
 import React, { useRef, useState, useCallback, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import "../css/camera.css";
 import Cookies from "js-cookie";
@@ -14,6 +13,7 @@ function Camera() {
 
   const webcamRef = useRef(null);
   const mapRef = useRef(null);
+  const navigate = useNavigate();
 
   const [imgFile, setImgFile] = useState(null);
   const [token, setToken] = useState("");
@@ -83,7 +83,9 @@ function Camera() {
 
     if (!imgFile) {
       console.error("Pas de fichier à envoyer.");
+      return;
     }
+
     try {
       const formData = new FormData();
       formData.append("avatar", dataURItoBlob(imgFile), "avatar.jpg");
@@ -103,6 +105,9 @@ function Camera() {
 
       if (response.status === 201) {
         console.info("Image téléchargée avec succès :", response.data);
+
+        // Redirection vers /map après avoir posté la photo
+        navigate("/map");
       }
     } catch (error) {
       console.error("Erreur lors de l'envoi de l'image", error);

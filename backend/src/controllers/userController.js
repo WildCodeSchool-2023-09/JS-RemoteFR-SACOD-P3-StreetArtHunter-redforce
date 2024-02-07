@@ -52,10 +52,13 @@ const add = async (req, res, next) => {
       const hashedPassword = await argon2.hash(user.password);
       delete user.password;
 
+      const isAdmin = user.is_admin ? 1 : 0;
+
       const insertId = await tables.users.create({
         pseudo: user.pseudo,
         email: user.email,
         hashedPassword,
+        is_admin: isAdmin,
       });
 
       res.status(201).json({ insertId });
