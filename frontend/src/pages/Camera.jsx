@@ -15,8 +15,6 @@ function Camera() {
   const mapRef = useRef(null);
   const navigate = useNavigate();
 
-  const navigate = useNavigate();
-
   const [imgFile, setImgFile] = useState(null);
   const [token, setToken] = useState("");
   const [artworks, setArtworks] = useState({});
