@@ -63,6 +63,8 @@ export default function Home() {
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/api/logout`)
       .then(() => {
+        document.cookie =
+          "session_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         navigate("/");
       })
       .catch((err) => console.error(err));
@@ -72,25 +74,18 @@ export default function Home() {
 
   const handleConfirmDeleteProfile = () => {
     if (user && user.id) {
-      if (passwordConfirmation !== user.hashedPassword) {
-        toast.error("Password confirmation does not match");
+      if (!passwordConfirmation) {
+        console.error("Password confirmation is missing.");
         return;
       }
 
       axios
         .delete(`${import.meta.env.VITE_BACKEND_URL}/api/user/${user.id}`, {
+          data: { password: passwordConfirmation },
           withCredentials: true,
         })
         .then(() => {
-          toast.success("Profile deleted successfully!", {
-            style: {
-              background: "red",
-              color: "white",
-              fontFamily: "RetroGaming, sans-serif",
-              textAlign: "center",
-            },
-          });
-
+          toast.success("Profile deleted successfully!");
           axios
             .post(`${import.meta.env.VITE_BACKEND_URL}/api/logout`)
             .then(() => {
@@ -100,7 +95,8 @@ export default function Home() {
             .catch((err) => console.error(err));
         })
         .catch((err) => {
-          console.error(err);
+          console.error("Error deleting profile:", err);
+          // Handle error here, show toast message or perform any necessary actions
         });
     }
   };
@@ -143,9 +139,6 @@ export default function Home() {
           <div className="button-text">Player Ranking</div>
         </button>
         {showPlayerRank && <List items={playerRankList} />}
-        <button type="button" className="edit-profile-button">
-          <div className="button-text">Edit profile</div>
-        </button>
         <button
           type="button"
           className="signout-button"
@@ -180,6 +173,7 @@ export default function Home() {
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
           <button
+            className="confirm-delete-button"
             type="button"
             onClick={() => {
               handleConfirmDeleteProfile();
@@ -189,6 +183,7 @@ export default function Home() {
             Confirm
           </button>
           <button
+            className="cancel-delete-button"
             type="button"
             onClick={() => {
               closeConfirmDelete();

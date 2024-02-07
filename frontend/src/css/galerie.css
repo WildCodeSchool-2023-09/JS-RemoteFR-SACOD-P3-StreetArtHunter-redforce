@@ -7,14 +7,23 @@
   src: url("./public/RetroGaming.ttf") format("truetype");
 }
 
-.galery-contenair {
+.galery-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
 }
 
 .galery-img {
-  margin: 5%;
-  margin-bottom: 110%;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: auto;
+  height: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 2.5rem;
 }
 
 .back-button:active {
