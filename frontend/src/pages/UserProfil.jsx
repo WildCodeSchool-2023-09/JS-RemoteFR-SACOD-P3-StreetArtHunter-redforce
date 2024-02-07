@@ -27,6 +27,7 @@ export default function Home() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
   const { user } = useUser();
 
@@ -40,7 +41,15 @@ export default function Home() {
 
   useEffect(() => {
     setBackgroundImageUrl(getRandomImageUrl());
-  }, []);
+    console.info("User data:", user);
+    if (user && user.is_admin === 1) {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
+  }, [user]);
+
+  console.info("isAdmin:", isAdmin);
 
   const backgroundStyle = {
     backgroundImage: `url(${backgroundImageUrl})`,
@@ -153,6 +162,11 @@ export default function Home() {
             <div className="button-text">Delete Profile</div>
           </button>
         </div>
+        {isAdmin && (
+          <Link to="/admin" type="button" className="admin-button">
+            <div className="button-text">God mode</div>
+          </Link>
+        )}
         <Link to="/map" type="button" className="back-button">
           <div className="button-text">Back</div>
         </Link>

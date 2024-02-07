@@ -6,10 +6,6 @@
   font-family: "RetroGaming";
   src: url("./public/RetroGaming.ttf") format("truetype");
 }
-.cardelements {
-  flex-direction: column;
-  display: flex;
-}
 
 .liste {
   flex-direction: column;
@@ -25,20 +21,29 @@
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .unordered {
-  padding-left: 0.8rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  justify-content: center;
   display: flex;
   flex-wrap: wrap;
+}
+
+ul.unordered {
+  padding: 0;
+  margin: 0;
 }
 
 .container-admin {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .validation {
@@ -57,13 +62,20 @@
 .profil-list-button,
 .artwork-list-button,
 .signout-button-admin,
-.button-back-admin {
+.button-back-admin,
+.button-view,
+.button-delete,
+.button-delete-yes,
+.button-delete-no {
+  font-size: 1.2rem;
+  font-family: "RetroGaming";
+  color: white;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 17rem;
-  min-height: 11rem;
+  min-width: 15rem;
+  min-height: 5rem;
   border: 1px solid #000000;
   background-color: black;
   -moz-border-radius: 50px 50px 50px 50px;
@@ -77,6 +89,17 @@
   outline: none;
   -webkit-box-shadow: -10px 14px 11px 0px rgba(0, 0, 0, 0.6);
   box-shadow: -10px 14px 11px 0px rgba(0, 0, 0, 0.6);
+}
+
+.button-delete-yes,
+.button-delete-no {
+  margin-top: 0;
+  min-width: 5rem;
+  min-height: 2rem;
+}
+
+.button-view {
+  margin: 0;
 }
 
 .validation:active,
@@ -97,4 +120,30 @@
     width: 40%;
     height: 7%;
   }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
