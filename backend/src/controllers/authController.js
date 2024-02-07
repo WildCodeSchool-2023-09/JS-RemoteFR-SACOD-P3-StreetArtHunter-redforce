@@ -1,49 +1,51 @@
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
-
-// Import access to database tables
 const tables = require("../tables");
 
 const login = async (req, res, next) => {
   try {
-    // Fetch a specific user from the database based on the provided email
     const user = await tables.users.readByEmailWithPassword(req.body.email);
 
-    if (user == null) {
-      res.sendStatus(422);
+    if (!user || !user.password) {
+      res.status(422).json({ error: "Email ou mot de passe incorrect" });
       return;
     }
 
-    const verified = await argon2.verify(
-      user.hashed_password,
-      req.body.password
-    );
+    const verified = await argon2.verify(user.password, req.body.password);
 
     if (verified) {
-      // Respond with the user and a signed token in JSON format (but without the hashed password)
-      delete user.hashed_password;
+      delete user.password;
 
-      const token = await jwt.sign(
+      const token = jwt.sign(
         { sub: user.id, isAdmin: user.isAdmin },
         process.env.APP_SECRET,
-        {
-          expiresIn: "1h",
-        }
+        { expiresIn: "1h" }
       );
-
-      res.json({
-        token,
-        user,
+      res.cookie("session_cookie", token, {
+        httpOnly: true,
+        sameSite: "strict",
       });
+      res.json({ user });
     } else {
-      res.sendStatus(422);
+      res
+        .status(422)
+        .json({ error: "Incorrect e-mail or password. Try again !" });
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+
+const logout = (req, res, next) => {
+  try {
+    res.clearCookie("session_cookie");
+    res.end();
+  } catch (err) {
     next(err);
   }
 };
 
 module.exports = {
   login,
+  logout,
 };

@@ -10,18 +10,12 @@ class UserManager extends AbstractManager {
   // The C of CRUD - Create operation
 
   async create(user) {
-    // Execute the SQL INSERT query to add a new user to the "user" table
+    const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+    const isAdmin = user.is_admin ? 1 : 0;
     const [result] = await this.database.query(
-      `insert into ${this.table} (pseudo, email, password, inscription_date, is_admin) values (?, ?, ?, ?, ?)`,
-      [
-        user.pseudo,
-        user.email,
-        user.hashedPassword,
-        user.inscription_date,
-        user.is_admin,
-      ]
+      `INSERT INTO ${this.table} (pseudo, email, password, is_admin, inscription_date) VALUES (?, ?, ?, ?, ?)`,
+      [user.pseudo, user.email, user.hashedPassword, isAdmin, currentDate]
     );
-    // Return the ID of the newly inserted user
     return result.insertId;
   }
 
@@ -67,11 +61,31 @@ class UserManager extends AbstractManager {
   // }
 
   // The D of CRUD - Delete operation
-  // TODO: Implement the delete operation to remove an user by its ID
+  // The D of CRUD - Delete operation
+  async deleteUserAndAssociatedPhotos(id) {
+    try {
+      // Supprimer d'abord les photos associées à l'utilisateur
+      await this.database.query(`DELETE FROM photos WHERE users_id = ?`, [id]);
 
-  // async delete(id) {
-  //   ...
-  // }
+      // Ensuite, supprimer l'utilisateur lui-même
+      await this.delete(id);
+    } catch (error) {
+      // Gérer les erreurs éventuelles
+      console.error("Erreur lors de la suppression de l'utilisateur :", error);
+      throw new Error("Erreur lors de la suppression de l'utilisateur");
+    }
+  }
+
+  async delete(id) {
+    // Execute la requête SQL pour supprimer l'utilisateur avec l'ID spécifié
+    const result = await this.database.query(
+      `DELETE FROM ${this.table} WHERE id = ?`,
+      [id]
+    );
+
+    // Retourne true si au moins une ligne a été affectée, sinon retourne false
+    return result.affectedRows > 0;
+  }
 }
 
 module.exports = UserManager;

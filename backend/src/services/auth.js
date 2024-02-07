@@ -1,11 +1,9 @@
 const argon2 = require("argon2");
-const jwt = require("jsonwebtoken");
+const tables = require("../tables");
 
-// Options de hachage (voir documentation : https://github.com/ranisalt/node-argon2/wiki/Options)
-// Recommandations **minimales** de l'OWASP : https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
 const hashingOptions = {
   type: argon2.argon2id,
-  memoryCost: 19 * 2 ** 10 /* 19 Mio en kio (19 * 1024 kio) */,
+  memoryCost: 19 * 2 ** 10,
   timeCost: 2,
   parallelism: 1,
 };
@@ -19,8 +17,6 @@ const hashPassword = async (req, res, next) => {
       const hashedPassword = await argon2.hash(password, hashingOptions);
 
       req.body.hashedPassword = hashedPassword;
-
-      console.info(req.body);
     } else {
       throw new Error("Password is missing");
     }
@@ -31,31 +27,28 @@ const hashPassword = async (req, res, next) => {
   }
 };
 
-const verifyToken = (req, res, next) => {
+const verifyPwd = async (req, res, next) => {
   try {
-    const authorizationHeader = req.get("Authorization");
-
-    if (authorizationHeader == null) {
-      throw new Error("Authorization header is missing");
+    const userhashed = await tables.users.readByEmailWithPassword(
+      req.body.email
+    );
+    if (!userhashed) {
+      res.status(422).json({ error: "Incorrect e-mail or password." });
+      return;
     }
-
-    const [type, token] = authorizationHeader.split(" ");
-
-    if (type !== "Bearer") {
-      throw new Error("Authorization header has not the 'Bearer' type");
+    if (await argon2.verify(userhashed.password, req.body.password)) {
+      delete userhashed.password;
+      req.user = userhashed;
+      next();
+    } else {
+      res.status(422).json({ error: "Incorrect e-mail or password." });
     }
-
-    req.auth = jwt.verify(token, process.env.APP_SECRET);
-
-    next();
   } catch (err) {
-    console.error(err);
-
-    res.sendStatus(401);
+    next(err);
   }
 };
 
 module.exports = {
   hashPassword,
-  verifyToken,
+  verifyPwd,
 };

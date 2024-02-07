@@ -3,7 +3,7 @@
   height: auto;
   display: flex;
   justify-content: center;
-  margin-bottom: 40%;
+  margin-bottom: 30%;
   margin-left: 25%;
 }
 
@@ -17,15 +17,40 @@
 
 .inscription-title {
   font-size: 20px;
-  margin-bottom: 15%;
+  margin-bottom: 10%;
   margin-left: 2%;
   font-family: "RetroGaming";
 }
 
 .connexion-button {
+  font-family: "RetroGaming";
+  color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 177px;
+  min-height: 44px;
+  border: 1px solid #000000;
+  background-color: black;
+  border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  margin-bottom: 2vw;
+  margin-top: 2vw;
+  cursor: pointer;
+  outline: none;
+  -webkit-box-shadow: -10px 14px 11px 0px rgba(0, 0, 0, 0.6);
+  box-shadow: -10px 14px 11px 0px rgba(0, 0, 0, 0.6);
+}
+
+.back-button {
   display: block;
   height: 25px;
-  margin-top: 5px;
   margin-bottom: 10px;
   border-radius: 25px 25px 25px 25px;
+}
+
+.password {
+  margin-bottom: 3vw;
 }

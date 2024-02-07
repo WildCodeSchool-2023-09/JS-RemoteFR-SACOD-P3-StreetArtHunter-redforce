@@ -3,23 +3,17 @@ const AbstractManager = require("./AbstractManager");
 class PictureManager extends AbstractManager {
   constructor() {
     // Call the constructor of the parent class (AbstractManager)
-    // and pass the table name "item" as configuration
     super({ table: "photos" });
   }
 
   // The C of CRUD - Create operation
 
-  async create(photo) {
+  async create(photo, avatar) {
     // Execute the SQL INSERT query to add a new item to the "item" table
+    const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
     const [result] = await this.database.query(
-      `insert into ${this.table} (photo_src, date_post, validation_status, user_id, artwork_id ) values (?, ?, ?, ?, ?)`,
-      [
-        photo.photo_src,
-        photo.date_post,
-        photo.validation_status,
-        photo.user_id,
-        photo.artwork_id,
-      ]
+      `insert into ${this.table} (photo_src, post_date, validation_status, users_id, artwork_id) values (?, ?, ?, ?, ?)`,
+      [avatar, currentDate, 0, photo.users_id, photo.artwork_id]
     );
 
     // Return the ID of the newly inserted item
@@ -47,19 +41,55 @@ class PictureManager extends AbstractManager {
     return rows;
   }
 
+  async readAllByUserId(userId) {
+    // Execute the SQL SELECT query to retrieve all items from the "item" table
+    const [rows] = await this.database.query(
+      `SELECT photos.photo_src, photos.post_date, photos.validation_status
+      FROM photos
+      JOIN users ON photos.users_id = users.id
+      WHERE users.id = ?;`,
+      [userId]
+    );
+
+    // Return the array of items
+    return rows;
+  }
+
+  async readAllByArtworkId() {
+    // Execute the SQL SELECT query to retrieve specific columns from the tables
+    const [rows] = await this.database.query(
+      `SELECT p.id as photo_id, p.photo_src, a.title, a.latitude, a.longitude 
+       FROM ${this.table} AS p 
+       JOIN artwork AS a ON p.artwork_id = a.id
+       WHERE p.validation_status = 1;`
+    );
+
+    // Return the array of items
+    return rows;
+  }
+
+  async readAllByValidationStatus() {
+    // Execute the SQL SELECT query to retrieve all items from the "item" table
+    const [rows] = await this.database.query(
+      `SELECT photos.id, photos.photo_src, photos.validation_status
+      FROM photos
+      WHERE photos.validation_status = 0;`
+    );
+
+    // Return the array of items
+    return rows;
+  }
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing item
 
-  // async update(item) {
-  //   ...
-  // }
-
-  // The D of CRUD - Delete operation
-  // TODO: Implement the delete operation to remove an item by its ID
-
-  // async delete(id) {
-  //   ...
-  // }
+  // ...
 }
+
+// The D of CRUD - Delete operation
+// TODO: Implement the delete operation to remove an item by its ID
+
+// async delete(id) {
+//   ...
+// }
 
 module.exports = PictureManager;

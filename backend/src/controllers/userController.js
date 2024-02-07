@@ -1,6 +1,11 @@
 const argon2 = require("argon2");
 // Import access to database tables
+const jwt = require("jsonwebtoken");
 const tables = require("../tables");
+
+const UserManager = require("../models/UserManager");
+
+const userManager = new UserManager();
 
 // The B of BREAD - Browse (Read All) operation
 const browse = async (req, res, next) => {
@@ -40,7 +45,6 @@ const read = async (req, res, next) => {
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
-  console.info(req.body);
   const user = req.body;
 
   try {
@@ -48,12 +52,13 @@ const add = async (req, res, next) => {
       const hashedPassword = await argon2.hash(user.password);
       delete user.password;
 
+      const isAdmin = user.is_admin ? 1 : 0;
+
       const insertId = await tables.users.create({
         pseudo: user.pseudo,
         email: user.email,
         hashedPassword,
-        inscription_date: user.inscription_date,
-        is_admin: user.is_admin,
+        is_admin: isAdmin,
       });
 
       res.status(201).json({ insertId });
@@ -65,14 +70,43 @@ const add = async (req, res, next) => {
   }
 };
 
-// The D of BREAD - Destroy (Delete) operation
-// This operation is not yet implemented
+const login = async (req, res, next) => {
+  try {
+    const token = jwt.sign(req.user, process.env.APP_SECRET);
+    if (await tables.users.readByEmailWithPassword(req.body.email)) {
+      res.json({ succes: "user loged succes", token });
+    } else {
+      res.json({ error: "oups une email ou password incorrect" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 
+// The D of BREAD - Destroy (Delete) operation
+async function deleteUser(req, res) {
+  const userId = req.params.id;
+
+  try {
+    // Utiliser userManager pour supprimer l'utilisateur et ses photos associées
+    await userManager.deleteUserAndAssociatedPhotos(userId);
+
+    // Répondre avec un statut 204 (No Content) pour indiquer que la suppression a réussi
+    res.status(204).send();
+  } catch (error) {
+    console.error("Erreur lors de la suppression de l'utilisateur :", error);
+    // Répondre avec un statut 500 (Internal Server Error) en cas d'erreur
+    res.status(500).json({
+      error: "Une erreur est survenue lors de la suppression de l'utilisateur",
+    });
+  }
+}
 // Ready to export the controller functions
 module.exports = {
   browse,
   read,
   // edit,
   add,
-  // destroy,
+  login,
+  deleteUser,
 };

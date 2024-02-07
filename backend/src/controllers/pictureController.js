@@ -1,11 +1,51 @@
 // Import access to database tables
+const fs = require("fs");
 const tables = require("../tables");
 
-// The B of BREAD - Browse (Read All) operation
 const browse = async (req, res, next) => {
   try {
     // Fetch all items from the database
     const photos = await tables.photos.readAll();
+
+    // Respond with the items in JSON format
+    res.json(photos);
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+
+const readAllPictureWithArtwork = async (req, res, next) => {
+  try {
+    // Fetch all items from the database
+    const artworks = await tables.photos.readAllByArtworkId();
+
+    // Respond with the items in JSON format
+    res.json(artworks);
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+
+const readAllPictureWithUser = async (req, res, next) => {
+  try {
+    const { userId } = req.params; // Use object destructuring to extract userId from req.params
+    // Fetch all items from the database
+    const pictures = await tables.photos.readAllByUserId(userId);
+
+    // Respond with the items in JSON format
+    res.json(pictures);
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+
+const readAllPictureWithValidationStatus = async (req, res, next) => {
+  try {
+    // Fetch all items from the database
+    const photos = await tables.photos.readAllByValidationStatus();
 
     // Respond with the items in JSON format
     res.json(photos);
@@ -41,17 +81,21 @@ const read = async (req, res, next) => {
 const add = async (req, res, next) => {
   // We know someone is authenticated
   // Only allowed if admin
-  if (!req.auth.isAdmin) {
-    res.sendStatus(403);
-    return;
-  }
 
   // Extract the item data from the request body
-  const photo = { ...req.body, user_id: req.auth.sub };
+  const photo = req.body;
+  const avatar = req.file;
 
+  fs.renameSync(
+    `${avatar.destination}/${avatar.filename}`,
+    `${avatar.destination}/${avatar.filename}-${avatar.originalname}`
+  );
   try {
     // Insert the item into the database
-    const insertId = await tables.photos.create(photo);
+    const insertId = await tables.photos.create(
+      photo,
+      `${avatar.destination}/${avatar.filename}-${avatar.originalname}`
+    );
 
     // Respond with HTTP 201 (Created) and the ID of the newly inserted item
     res.status(201).json({ insertId });
@@ -61,14 +105,27 @@ const add = async (req, res, next) => {
   }
 };
 
-// The D of BREAD - Destroy (Delete) operation
-// This operation is not yet implemented
+const updateValidationStatus = async (req, res, next) => {
+  try {
+    const { photoId } = req.params;
+    const { validationStatus } = req.body;
 
-// Ready to export the controller functions
+    await tables.photos.updateValidationStatus(photoId, validationStatus);
+
+    // Respond with HTTP 204 (No Content) to indicate success
+    res.sendStatus(204);
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+
 module.exports = {
   browse,
+  readAllPictureWithArtwork,
+  readAllPictureWithUser,
+  readAllPictureWithValidationStatus,
   read,
-  // edit,
   add,
-  // destroy,
+  updateValidationStatus,
 };

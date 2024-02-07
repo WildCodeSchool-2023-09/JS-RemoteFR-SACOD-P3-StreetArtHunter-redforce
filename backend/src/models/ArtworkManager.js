@@ -11,14 +11,10 @@ class ArtworkManager extends AbstractManager {
 
   async create(artwork) {
     // Execute the SQL INSERT query to add a new item to the "item" table
+    const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
     const [result] = await this.database.query(
       `insert into ${this.table} (title, latitude, longitude, first_post_date) values (?, ?, ?, ?)`,
-      [
-        artwork.title,
-        artwork.latitude,
-        artwork.longitude,
-        artwork.first_post_date,
-      ]
+      [artwork.title, artwork.latitude, artwork.longitude, currentDate]
     );
 
     // Return the ID of the newly inserted item
@@ -56,9 +52,14 @@ class ArtworkManager extends AbstractManager {
   // The D of CRUD - Delete operation
   // TODO: Implement the delete operation to remove an item by its ID
 
-  // async delete(id) {
-  //   ...
-  // }
+  async delete(id) {
+    const result = await this.database.query(
+      `DELETE FROM ${this.table} WHERE id = ?`,
+      [id]
+    );
+
+    return result.affectedRows > 0;
+  }
 }
 
 module.exports = ArtworkManager;
