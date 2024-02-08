@@ -36,7 +36,6 @@ function Map() {
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/pictures/artworks`)
       .then((res) => {
         setArtworks(res.data);
-        console.info(res.data);
       })
       .catch((err) => {
         console.error(err);

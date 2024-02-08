@@ -1,8 +1,6 @@
 const argon2 = require("argon2");
-// Import access to database tables
 const jwt = require("jsonwebtoken");
 const tables = require("../tables");
-
 const UserManager = require("../models/UserManager");
 
 const userManager = new UserManager();
@@ -70,13 +68,14 @@ const add = async (req, res, next) => {
   }
 };
 
+// Login operation
 const login = async (req, res, next) => {
   try {
     const token = jwt.sign(req.user, process.env.APP_SECRET);
     if (await tables.users.readByEmailWithPassword(req.body.email)) {
-      res.json({ succes: "user loged succes", token });
+      res.json({ success: "User logged in successfully", token });
     } else {
-      res.json({ error: "oups une email ou password incorrect" });
+      res.json({ error: "Oops, incorrect email or password" });
     }
   } catch (err) {
     next(err);
@@ -88,24 +87,24 @@ async function deleteUser(req, res) {
   const userId = req.params.id;
 
   try {
-    // Utiliser userManager pour supprimer l'utilisateur et ses photos associées
+    // Use userManager to delete the user and associated photos
     await userManager.deleteUserAndAssociatedPhotos(userId);
 
-    // Répondre avec un statut 204 (No Content) pour indiquer que la suppression a réussi
+    // Respond with a 204 status (No Content) to indicate successful deletion
     res.status(204).send();
   } catch (error) {
-    console.error("Erreur lors de la suppression de l'utilisateur :", error);
-    // Répondre avec un statut 500 (Internal Server Error) en cas d'erreur
+    console.error("Error deleting user:", error);
+    // Respond with a 500 status (Internal Server Error) in case of error
     res.status(500).json({
-      error: "Une erreur est survenue lors de la suppression de l'utilisateur",
+      error: "An error occurred while deleting the user",
     });
   }
 }
+
 // Ready to export the controller functions
 module.exports = {
   browse,
   read,
-  // edit,
   add,
   login,
   deleteUser,

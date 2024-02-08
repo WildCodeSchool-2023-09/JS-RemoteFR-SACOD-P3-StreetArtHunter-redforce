@@ -116,7 +116,7 @@ app.get("*", (req, res) => {
 });
 */
 
-app.use(express.static("public"));
+app.use("/public", express.static("public"));
 
 app.use("*", (req, res) => {
   if (req.originalUrl.includes("assets")) {

@@ -9,10 +9,7 @@ import { useUser } from "../context/UserContext";
 function Home() {
   const [isVisitorMode, setIsVisitorMode] = useState(false);
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
-  const [login, setLogin] = useState({
-    email: "diogo000@gmail.com",
-    password: "azerty1234",
-  });
+  const [login, setLogin] = useState({});
   const { user, setUser } = useUser();
   const navigate = useNavigate();
 

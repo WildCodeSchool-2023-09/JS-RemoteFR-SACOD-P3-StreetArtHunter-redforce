@@ -58,7 +58,7 @@ class PictureManager extends AbstractManager {
   async readAllByArtworkId() {
     // Execute the SQL SELECT query to retrieve specific columns from the tables
     const [rows] = await this.database.query(
-      `SELECT p.id as photo_id, p.photo_src, a.title, a.latitude, a.longitude 
+      `SELECT p.id as photo_id, p.photo_src, p.post_date, p.users_id, a.first_post_date, a.title, a.latitude, a.longitude 
        FROM ${this.table} AS p 
        JOIN artwork AS a ON p.artwork_id = a.id
        WHERE p.validation_status = 1;`
@@ -79,9 +79,16 @@ class PictureManager extends AbstractManager {
     // Return the array of items
     return rows;
   }
+
   // The U of CRUD - Update operation
   // TODO: Implement the update operation to modify an existing item
-
+  async updateValidationStatus(photoId, validationStatus) {
+    // Execute the SQL UPDATE query to modify the validation_status of the photo
+    await this.database.query(
+      `UPDATE ${this.table} SET validation_status = ? WHERE id = ?`,
+      [validationStatus, photoId]
+    );
+  }
   // ...
 }
 

@@ -64,10 +64,10 @@ function List({
       <div className="cardelements">
         <ul className="unordered">
           {artworks.map((artwork) => (
-            <li key={artwork.id} className="liste">
-              <p>ID: {artwork.id}</p>
+            <li key={artwork.photo_id} className="liste">
+              <p>ID: {artwork.photo_id}</p>
               <img
-                src={artwork.photo_src}
+                src={`${import.meta.env.VITE_BACKEND_URL}/${artwork.photo_src}`}
                 alt={artwork.id}
                 style={{ height: "200px", width: "200px" }}
               />
@@ -80,7 +80,6 @@ function List({
                 {new Date(artwork.post_date).toLocaleDateString()}
               </p>
               <p>User: {artwork.users_id}</p>
-              <p>Title: {artwork.title}</p>
               <button
                 className="button-view"
                 type="button"
@@ -89,7 +88,7 @@ function List({
                 View User Profile
               </button>
               <Link
-                to={`/map?lat=${artwork.latitude}&lng=${artwork.longitude}`}
+                to={`/map?lat=${artwork.latitude}&lng=${artwork.longitude}zoom=${5}`}
               >
                 <button type="button" className="button-view">
                   View on map
@@ -243,27 +242,23 @@ export default function Admin() {
   };
 
   const handleConfirmPhotoValidation = async (photoId) => {
-    // Mettre à jour l'état local des photos pour refléter le nouveau statut de validation
     setValidationPhotos((prevPhotos) =>
       prevPhotos.map((photo) =>
-        photo.id === photoId ? { ...photo, validation_status: 1 } : photo
+        photo.id === photoId ? { ...photo, validationStatus: 1 } : photo
       )
     );
 
     try {
-      // Effectuer une requête PUT vers l'API backend pour confirmer la validation de la photo avec l'ID photoId
       await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/picture/${photoId}`,
 
         {
-          validation_status: 1,
+          validationStatus: 1,
         }
       );
     } catch (error) {
-      // Gérer les erreurs en cas d'échec de la requête
       console.error("Error confirming photo validation:", error);
 
-      // Annuler le changement dans l'état local si la requête a échoué
       setValidationPhotos((prevPhotos) =>
         prevPhotos.map((photo) =>
           photo.id === photoId ? { ...photo, validation_status: 0 } : photo
