@@ -8,25 +8,6 @@ const hashingOptions = {
   parallelism: 1,
 };
 
-const hashPassword = async (req, res, next) => {
-  console.info(req.body);
-  try {
-    const { password } = req.body;
-
-    if (password) {
-      const hashedPassword = await argon2.hash(password, hashingOptions);
-
-      req.body.hashedPassword = hashedPassword;
-    } else {
-      throw new Error("Password is missing");
-    }
-
-    next();
-  } catch (err) {
-    next(err);
-  }
-};
-
 const verifyPwd = async (req, res, next) => {
   try {
     const userhashed = await tables.users.readByEmailWithPassword(
@@ -48,7 +29,54 @@ const verifyPwd = async (req, res, next) => {
   }
 };
 
+const hashPassword = async (req, res, next) => {
+  try {
+    const { password } = req.body;
+
+    if (password) {
+      const hashedPassword = await argon2.hash(password, hashingOptions);
+
+      req.body.hashedPassword = hashedPassword;
+    } else {
+      throw new Error("Password is missing");
+    }
+
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
+const verifyPwdForDelete = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      res.status(422).json({ error: "Email or password is missing." });
+      return;
+    }
+
+    const user = await tables.users.readByEmailWithPassword(email);
+
+    if (!user) {
+      res.status(422).json({ error: "User not found." });
+      return;
+    }
+
+    const match = await argon2.verify(user.password, password);
+
+    if (match) {
+      next();
+    } else {
+      res.status(422).json({ error: "Incorrect email or password." });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   hashPassword,
   verifyPwd,
+  verifyPwdForDelete,
 };

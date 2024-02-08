@@ -1,4 +1,5 @@
 const argon2 = require("argon2");
+
 const jwt = require("jsonwebtoken");
 const tables = require("../tables");
 
@@ -39,7 +40,7 @@ const login = async (req, res, next) => {
 const logout = (req, res, next) => {
   try {
     res.clearCookie("session_cookie");
-    res.end();
+    res.json({ message: "Disconnection successful!" });
   } catch (err) {
     next(err);
   }
