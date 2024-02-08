@@ -63,17 +63,13 @@ class UserManager extends AbstractManager {
   // The D of CRUD - Delete operation
   // The D of CRUD - Delete operation
   async deleteUserAndAssociatedPhotos(id) {
-    try {
-      // Supprimer d'abord les photos associées à l'utilisateur
-      await this.database.query(`DELETE FROM photos WHERE users_id = ?`, [id]);
+    // Supprimer d'abord les photos associées à l'utilisateur
+    await this.database.query(`DELETE FROM photos WHERE users_id = ?`, [id]);
 
-      // Ensuite, supprimer l'utilisateur lui-même
-      await this.delete(id);
-    } catch (error) {
-      // Gérer les erreurs éventuelles
-      console.error("Erreur lors de la suppression de l'utilisateur :", error);
-      throw new Error("Erreur lors de la suppression de l'utilisateur");
-    }
+    // Ensuite, supprimer l'utilisateur lui-même
+    const result = await this.delete(id);
+
+    return result;
   }
 
   async delete(id) {

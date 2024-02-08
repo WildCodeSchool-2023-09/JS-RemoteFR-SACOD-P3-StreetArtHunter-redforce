@@ -110,13 +110,24 @@ const updateValidationStatus = async (req, res, next) => {
     const { photoId } = req.params;
     const { validationStatus } = req.body;
 
-    await tables.photos.updateValidationStatus(photoId, validationStatus);
+    if (validationStatus === undefined || validationStatus === null) {
+      return res
+        .status(400)
+        .json({ message: "Validation status is required and cannot be null." });
+    }
 
-    // Respond with HTTP 204 (No Content) to indicate success
-    res.sendStatus(204);
+    const status = Number(validationStatus);
+    if (Number.isNaN(status)) {
+      return res
+        .status(400)
+        .json({ message: "Validation status must be a number." });
+    }
+
+    await tables.photos.updateValidationStatus(photoId, status);
+
+    return res.sendStatus(204);
   } catch (err) {
-    // Pass any errors to the error-handling middleware
-    next(err);
+    return next(err);
   }
 };
 

@@ -17,7 +17,6 @@ function Geolocation() {
     const { latitude, longitude } = position.coords;
 
     if (target.latitude === latitude && target.longitude === longitude) {
-      console.info("Congratulations, you've reached the target");
       navigator.geolocation.clearWatch(id);
     }
 

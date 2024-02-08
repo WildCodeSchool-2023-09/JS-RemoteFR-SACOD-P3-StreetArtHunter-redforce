@@ -41,15 +41,12 @@ export default function Home() {
 
   useEffect(() => {
     setBackgroundImageUrl(getRandomImageUrl());
-    console.info("User data:", user);
     if (user && user.is_admin === 1) {
       setIsAdmin(true);
     } else {
       setIsAdmin(false);
     }
   }, [user]);
-
-  console.info("isAdmin:", isAdmin);
 
   const backgroundStyle = {
     backgroundImage: `url(${backgroundImageUrl})`,
@@ -96,7 +93,6 @@ export default function Home() {
         })
         .catch((err) => {
           console.error("Error deleting profile:", err);
-          // Handle error here, show toast message or perform any necessary actions
         });
     }
   };

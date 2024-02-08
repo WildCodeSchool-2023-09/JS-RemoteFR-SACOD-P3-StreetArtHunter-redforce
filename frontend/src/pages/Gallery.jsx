@@ -32,7 +32,6 @@ function Gallery() {
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/pictures/user/${userId}`)
       .then((res) => {
         setUserPhotos(res.data);
-        console.info(res.data);
       })
 
       .catch((err) => {
