@@ -15,11 +15,16 @@ import Gallery from "./pages/Gallery";
 import Camera from "./pages/Camera";
 import UserProvider, { useUser } from "./context/UserContext";
 import "react-toastify/dist/ReactToastify.css";
+import MapVisitor from "./pages/MapVisitor";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/mapVisitor",
+    element: <MapVisitor />,
   },
   {
     path: "/inscription",
